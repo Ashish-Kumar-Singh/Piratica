@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">piratica</string>
+    <string name="compromised_websites">Compromised Websites</string>
+    <string name="no_hackers_detected">No Hackers Detected</string>
 </resources>

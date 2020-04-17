@@ -21,12 +21,17 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import java.net.InetAddress;
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.net.UnknownHostException;
 
 
 
 public class MainActivity extends AppCompatActivity {
     private Button rollButton;
     private TextView ipaddress;
+    private  TextView ipstuff;
     private TextView ssid;
 
     @Override
@@ -36,37 +41,36 @@ public class MainActivity extends AppCompatActivity {
         rollButton = findViewById(R.id.rollButton);
         ipaddress = findViewById(R.id.ip);
         ssid = findViewById(R.id.ssid);
+        ipstuff = findViewById(R.id.ipinfo);
         if (ActivityCompat.checkSelfPermission(MainActivity.this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(MainActivity.this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
             ActivityCompat.requestPermissions(MainActivity.this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, 1);
             return;
         }else{
             // Write you code here if permission already given.
-        }
-        WifiManager wifiManager =(WifiManager) getApplicationContext().getSystemService(Context.WIFI_SERVICE);
-        WifiInfo wifiInfo = wifiManager.getConnectionInfo();
-        if (wifiInfo == null) {
+            WifiManager wifiManager =(WifiManager) getApplicationContext().getSystemService(Context.WIFI_SERVICE);
+            WifiInfo wifiInfo = wifiManager.getConnectionInfo();
+            if (wifiInfo == null) {
 
-        } else {
-            if (wifiInfo.getSupplicantState() == SupplicantState.COMPLETED) {
-                ssid.setText("SSID: " + wifiInfo.getSSID());
-            }
-
-
-            int ipAddress = wifiInfo.getIpAddress();
-            String FormatedIpAddress2 = String.format("%d.%d.%d.%d",
-                    (ipAddress & 0xff),
-                    (ipAddress >> 8 & 0xff),
-                    (ipAddress >> 16 & 0xff),
-                    (ipAddress >> 24 & 0xff));
-            ipaddress.setText(FormatedIpAddress2);
-            rollButton.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(android.view.View v) {
-                    openActivity();
+            } else {
+                if (wifiInfo.getSupplicantState() == SupplicantState.COMPLETED) {
+                    ssid.setText("SSID: " + wifiInfo.getSSID());
                 }
-            });
-
+                int ipAddress = wifiInfo.getIpAddress();
+                String FormatedIpAddress2 = String.format("%d.%d.%d.%d",
+                        (ipAddress & 0xff),
+                        (ipAddress >> 8 & 0xff),
+                        (ipAddress >> 16 & 0xff),
+                        (ipAddress >> 24 & 0xff));
+                ipaddress.setText(FormatedIpAddress2);
+                rollButton.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(android.view.View v) {
+                        openActivity();
+                    }
+                });
+            }
         }
+
 
         }
     public void openActivity(){
