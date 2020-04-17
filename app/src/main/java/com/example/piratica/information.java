@@ -39,18 +39,18 @@ public class information extends AppCompatActivity {
         setContentView(R.layout.activity_information);
         InfoText = findViewById(R.id.InfoText);
         String netAddress = null;
-        String link = "www.joe.ie";
+        String link = "dit.ie";
         try
         {
             netAddress = new NetTask().execute(link).get();
-//            InfoText.setText(netAddress);
+            InfoText.setText(netAddress);
         }
         catch (Exception e1)
         {
             e1.printStackTrace();
         }
         OkHttpClient client = new OkHttpClient();
-        String url = "https://www.whoisxmlapi.com/whoisserver/DNSService?apiKey=at_nZNsncxr1W3JtbG0qAiYFF1RVtv6I&domainName=joe.ie&type=1&outputFormat=JSON";
+        String url = "https://www.whoisxmlapi.com/whoisserver/DNSService?apiKey=at_nZNsncxr1W3JtbG0qAiYFF1RVtv6I&domainName="+link+"&type=1&outputFormat=JSON";
 
         Request request = new Request.Builder()
                 .url(url)
@@ -71,8 +71,9 @@ public class information extends AppCompatActivity {
                         jsonObject = new JSONObject(myResponse);
                         JSONObject dnsData = jsonObject.optJSONObject("DNSData");
                         JSONArray dnsRecords = dnsData.getJSONArray("dnsRecords");
-                        JSONObject objects = dnsRecords.getJSONObject(0);
-                        Log.d("IP", objects.getString("address"));
+                            JSONObject objects = dnsRecords.getJSONObject(0);
+                            Log.d("IP", objects.getString("address"));
+
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }
