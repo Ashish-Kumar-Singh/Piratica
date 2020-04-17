@@ -31,26 +31,21 @@ import okhttp3.Response;
 
 public class information extends AppCompatActivity {
     private TextView InfoText;
-    String text;
-
+    private TextView apiText;
+    private String APIKey= "at_nZNsncxr1W3JtbG0qAiYFF1RVtv6I";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         setContentView(R.layout.activity_information);
         InfoText = findViewById(R.id.InfoText);
-        String netAddress = null;
-        String link = "dit.ie";
-        try
-        {
-            netAddress = new NetTask().execute(link).get();
-            InfoText.setText(netAddress);
-        }
-        catch (Exception e1)
-        {
-            e1.printStackTrace();
-        }
+        apiText = findViewById(R.id.apitext);
+
+
+        final String link = "dit.ie";
+
         OkHttpClient client = new OkHttpClient();
-        String url = "https://www.whoisxmlapi.com/whoisserver/DNSService?apiKey=at_nZNsncxr1W3JtbG0qAiYFF1RVtv6I&domainName="+link+"&type=1&outputFormat=JSON";
+        String url = "https://www.whoisxmlapi.com/whoisserver/DNSService?apiKey="+APIKey+"&domainName="+link+"&type=1&outputFormat=JSON";
 
         Request request = new Request.Builder()
                 .url(url)
@@ -73,6 +68,24 @@ public class information extends AppCompatActivity {
                         JSONArray dnsRecords = dnsData.getJSONArray("dnsRecords");
                             JSONObject objects = dnsRecords.getJSONObject(0);
                             Log.d("IP", objects.getString("address"));
+                            final String ip = objects.getString("address");
+                            information.this.runOnUiThread(new Runnable() {
+                                @Override
+                                public void run() {
+                                    apiText.setText("API IP For DIT: "+ip);
+                                    try
+                                    {
+                                        String netAddress = null;
+                                        netAddress = new NetTask().execute(link).get();
+                                        InfoText.setText("Local Network IP for DIT "+netAddress);
+
+                                    }
+                                    catch (Exception e1)
+                                    {
+                                        e1.printStackTrace();
+                                    }
+                                }
+                            });
 
                     } catch (JSONException e) {
                         e.printStackTrace();
