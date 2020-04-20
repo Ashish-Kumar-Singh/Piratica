@@ -19,8 +19,7 @@ import javax.net.ssl.SSLSocketFactory;
 import javax.xml.bind.DatatypeConverter;
 
 
-public class NetIpAdd extends AsyncTask<String, Integer, String>
-{
+public class NetIpAdd extends AsyncTask<String, Integer, String> {
     @Override
     protected String doInBackground(String... params) {
         String LANThumbprint = null;

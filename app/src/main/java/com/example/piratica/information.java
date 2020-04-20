@@ -8,23 +8,9 @@ import android.widget.TextView;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-import org.w3c.dom.Document;
-import org.w3c.dom.Element;
-import org.w3c.dom.Node;
-import org.w3c.dom.NodeList;
-import org.xml.sax.SAXException;
 
 import java.io.IOException;
-import java.io.InputStream;
-import java.net.InetAddress;
-import java.net.UnknownHostException;
-import java.security.NoSuchAlgorithmException;
-import java.security.cert.CertificateEncodingException;
 import java.util.concurrent.ExecutionException;
-
-import javax.xml.parsers.DocumentBuilder;
-import javax.xml.parsers.DocumentBuilderFactory;
-import javax.xml.parsers.ParserConfigurationException;
 
 import okhttp3.Call;
 import okhttp3.Callback;
@@ -47,12 +33,22 @@ public class information extends AppCompatActivity {
         final String link = "ncirl.ie";
         try {
             String LANThumbprint = new NetIpAdd().execute(link).get();
-            InfoText.setText(LANThumbprint);
+            InfoText.setText("Network Thumbprint "+LANThumbprint);
         } catch (InterruptedException e) {
             e.printStackTrace();
         } catch (ExecutionException e) {
             e.printStackTrace();
         }
+
+        try {
+            String NetThumbprint = new GetUrlContentTask().execute(link).get();
+            InfoText.append("\n API Thumbprint "+NetThumbprint);
+        } catch (ExecutionException e) {
+            e.printStackTrace();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+
 
         OkHttpClient client = new OkHttpClient();
         String url = "https://www.whoisxmlapi.com/whoisserver/DNSService?apiKey="+APIKey+"&domainName="+link+"&type=1&outputFormat=JSON";
@@ -106,4 +102,5 @@ public class information extends AppCompatActivity {
         });
 
     }
+
 }
