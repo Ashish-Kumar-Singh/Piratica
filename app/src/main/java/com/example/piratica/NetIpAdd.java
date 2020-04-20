@@ -1,38 +1,51 @@
 package com.example.piratica;
 
 
+import android.os.AsyncTask;
+
 import java.io.IOException;
+import java.net.InetAddress;
+import java.net.UnknownHostException;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
+import java.security.PublicKey;
+import java.security.cert.Certificate;
+import java.security.cert.CertificateEncodingException;
 
-import okhttp3.Call;
-import okhttp3.Callback;
-import okhttp3.OkHttpClient;
-import okhttp3.Request;
-import okhttp3.Response;
+import javax.net.ssl.HttpsURLConnection;
+import javax.net.ssl.SSLPeerUnverifiedException;
+import javax.net.ssl.SSLSocket;
+import javax.net.ssl.SSLSocketFactory;
+import javax.xml.bind.DatatypeConverter;
 
-class NetIpAdd {
-    public void CheckIp(String DomainName){
-        String host = DomainName;
-        OkHttpClient client = new OkHttpClient();
-        String url = "https://www.whoisxmlapi.com/whoisserver/DNSService?apiKey=at_nZNsncxr1W3JtbG0qAiYFF1RVtv6I&domainName="+DomainName+"&type=1";
 
-            Request request = new Request.Builder()
-                    .url(url)
-                    .build();
-
-            client.newCall(request).enqueue(new Callback() {
-                @Override
-                public void onFailure(Call call, IOException e) {
-                    e.printStackTrace();
-                }
-
-                @Override
-                public void onResponse(Call call, Response response) throws IOException {
-                    if(response.isSuccessful()){
-                        String myResponse = response.body().string();
-                    }
-                }
-            });
+public class NetIpAdd extends AsyncTask<String, Integer, String>
+{
+    @Override
+    protected String doInBackground(String... params) {
+        String LANThumbprint = null;
+        try {
+            SSLSocketFactory factory = HttpsURLConnection.getDefaultSSLSocketFactory();
+            SSLSocket socket = (SSLSocket) factory.createSocket(params[0], 443);
+            socket.startHandshake();
+            Certificate[] certs = socket.getSession().getPeerCertificates();
+            Certificate cert = certs[0];
+            LANThumbprint = DatatypeConverter.printHexBinary(
+                    MessageDigest.getInstance("SHA-1").digest(
+                            cert.getEncoded())).toLowerCase();
+        } catch (UnknownHostException e) {
+            e.printStackTrace();
+        } catch (CertificateEncodingException e) {
+            e.printStackTrace();
+        } catch (NoSuchAlgorithmException e) {
+            e.printStackTrace();
+        } catch (SSLPeerUnverifiedException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
         }
+        return LANThumbprint;
     }
+}
 
 

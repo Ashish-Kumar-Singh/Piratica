@@ -18,6 +18,9 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
+import java.security.NoSuchAlgorithmException;
+import java.security.cert.CertificateEncodingException;
+import java.util.concurrent.ExecutionException;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
@@ -41,8 +44,15 @@ public class information extends AppCompatActivity {
         InfoText = findViewById(R.id.InfoText);
         apiText = findViewById(R.id.apitext);
 
-
-        final String link = "dit.ie";
+        final String link = "ncirl.ie";
+        try {
+            String LANThumbprint = new NetIpAdd().execute(link).get();
+            InfoText.setText(LANThumbprint);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        } catch (ExecutionException e) {
+            e.printStackTrace();
+        }
 
         OkHttpClient client = new OkHttpClient();
         String url = "https://www.whoisxmlapi.com/whoisserver/DNSService?apiKey="+APIKey+"&domainName="+link+"&type=1&outputFormat=JSON";
@@ -72,12 +82,12 @@ public class information extends AppCompatActivity {
                             information.this.runOnUiThread(new Runnable() {
                                 @Override
                                 public void run() {
-                                    apiText.setText("API IP For DIT: "+ip);
+                                    apiText.setText("API IP For NCI: "+ip);
                                     try
                                     {
                                         String netAddress = null;
                                         netAddress = new NetTask().execute(link).get();
-                                        InfoText.setText("Local Network IP for DIT "+netAddress);
+                                        apiText.append("\n Local Network IP for NCI "+netAddress);
 
                                     }
                                     catch (Exception e1)
