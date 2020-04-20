@@ -82,12 +82,12 @@ public class information extends AppCompatActivity {
                             information.this.runOnUiThread(new Runnable() {
                                 @Override
                                 public void run() {
-                                    apiText.setText("API IP For NCI: "+ip);
+                                    apiText.setText("API IP For "+link+": "+ip);
                                     try
                                     {
                                         String netAddress = null;
                                         netAddress = new NetTask().execute(link).get();
-                                        apiText.append("\n Local Network IP for NCI "+netAddress);
+                                        apiText.append("\n Local Network IP for "+link+" "+netAddress);
 
                                     }
                                     catch (Exception e1)

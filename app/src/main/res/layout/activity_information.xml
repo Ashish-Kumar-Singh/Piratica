@@ -8,8 +8,8 @@
 
     <EditText
         android:id="@+id/apitext"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="341dp"
+        android:layout_height="63dp"
         android:autofillHints=""
         android:ems="10"
         android:gravity="start|top"
@@ -54,8 +54,8 @@
 
     <EditText
         android:id="@+id/InfoText"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="249dp"
+        android:layout_height="75dp"
         android:autofillHints=""
         android:ems="10"
         android:gravity="start|top"
