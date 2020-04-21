@@ -1,32 +1,25 @@
 package com.example.piratica;
 
 import android.Manifest;
-import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.graphics.Color;
-import android.net.ConnectivityManager;
-import android.net.NetworkInfo;
 import android.net.wifi.SupplicantState;
 import android.net.wifi.WifiInfo;
 import android.net.wifi.WifiManager;
+import android.os.Bundle;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
-import android.net.wifi.WifiInfo;
-import android.os.Bundle;
-import android.text.format.Formatter;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
+
 import java.net.InetAddress;
-import java.net.MalformedURLException;
-import java.net.URL;
 import java.net.UnknownHostException;
 
+import jcifs.netbios.NbtAddress;
 
 
 public class MainActivity extends AppCompatActivity {
@@ -48,6 +41,7 @@ public class MainActivity extends AppCompatActivity {
             ActivityCompat.requestPermissions(MainActivity.this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, 1);
             return;
         }else{
+
             // Write you code here if permission already given.
 //            getInfo gInfo = new getInfo();
 //            String mac = gInfo.getMacAddressFromIP("192.168.0.52");
@@ -69,7 +63,7 @@ public class MainActivity extends AppCompatActivity {
                 ipaddress.setText(FormatedIpAddress2);
                 rollButton.setOnClickListener(new View.OnClickListener() {
                     @Override
-                    public void onClick(android.view.View v) {
+                    public void onClick(View v) {
                         String user = website.getText().toString();
                         Log.e("input", user);
                         userInput uinput = new userInput();
