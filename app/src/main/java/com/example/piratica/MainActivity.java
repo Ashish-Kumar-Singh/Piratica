@@ -19,6 +19,7 @@ import android.text.format.Formatter;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import java.net.InetAddress;
@@ -33,6 +34,7 @@ public class MainActivity extends AppCompatActivity {
     private TextView ipaddress;
     private  TextView ipstuff;
     private TextView ssid;
+    private EditText website;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,12 +43,15 @@ public class MainActivity extends AppCompatActivity {
         rollButton = findViewById(R.id.rollButton);
         ipaddress = findViewById(R.id.ip);
         ssid = findViewById(R.id.ssid);
-        ipstuff = findViewById(R.id.ipinfo);
+        website = (EditText) findViewById(R.id.userInput);
         if (ActivityCompat.checkSelfPermission(MainActivity.this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(MainActivity.this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
             ActivityCompat.requestPermissions(MainActivity.this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, 1);
             return;
         }else{
             // Write you code here if permission already given.
+//            getInfo gInfo = new getInfo();
+//            String mac = gInfo.getMacAddressFromIP("192.168.0.52");
+//            website.setText(mac);
             WifiManager wifiManager =(WifiManager) getApplicationContext().getSystemService(Context.WIFI_SERVICE);
             WifiInfo wifiInfo = wifiManager.getConnectionInfo();
             if (wifiInfo == null) {
@@ -65,6 +70,10 @@ public class MainActivity extends AppCompatActivity {
                 rollButton.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(android.view.View v) {
+                        String user = website.getText().toString();
+                        Log.e("input", user);
+                        userInput uinput = new userInput();
+                        uinput.setWebsite(user);
                         openActivity();
                     }
                 });

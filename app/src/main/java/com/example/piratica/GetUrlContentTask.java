@@ -15,15 +15,15 @@ public class GetUrlContentTask extends AsyncTask<String, Integer, String> {
         String fingerprint = null;
         try {
             Document doc = Jsoup.connect("https://www.grc.com/fingerprints.htm?domain="+params[0]).get();
-//          words = doc.getAllElements();
             words = doc.select("tr[class=dark]").first();
             Elements cols = words.select("td");
             fingerprint = cols.get(3).text();
-
+            fingerprint = fingerprint.replaceAll(":", "");
         }
         catch (Exception e){
             e.printStackTrace();
         }
+
         return fingerprint;
     }
 }

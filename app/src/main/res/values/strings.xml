@@ -2,4 +2,8 @@
     <string name="app_name">piratica</string>
     <string name="compromised_websites">Compromised Websites</string>
     <string name="no_hackers_detected">No Hackers Detected</string>
+    <string name="_192_168_10_1">192.168.10.1</string>
+    <string name="wifi_ssid">WiFi SSID</string>
+    <string name="piratica">Piratica</string>
+    <string name="check_for_hackers">Check for Hackers</string>
 </resources>
