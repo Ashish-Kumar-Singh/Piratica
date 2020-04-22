@@ -9,6 +9,7 @@ import org.jsoup.select.Elements;
 
 
 public class GetUrlContentTask extends AsyncTask<String, Integer, String> {
+    //Gets the Thumbprint of website from the GRC Website
     @Override
     protected String doInBackground(String... params) {
         Element words = null;

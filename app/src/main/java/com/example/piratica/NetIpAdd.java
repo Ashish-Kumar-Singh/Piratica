@@ -20,21 +20,24 @@ import javax.xml.bind.DatatypeConverter;
 
 
 public class NetIpAdd extends AsyncTask<String, Integer, String> {
+    //Gets the Thumbprint of website on Network.
     @Override
     protected String doInBackground(String... params) {
         String LANThumbprint = null;
         try {
             SSLSocketFactory factory = HttpsURLConnection.getDefaultSSLSocketFactory();
             SSLSocket socket = (SSLSocket) factory.createSocket(params[0], 443);
-            socket.startHandshake();
-            Certificate[] certs = socket.getSession().getPeerCertificates();
-            Certificate cert = certs[0];
-            LANThumbprint = DatatypeConverter.printHexBinary(
-                    MessageDigest.getInstance("SHA-1").digest(
-                            cert.getEncoded())).toLowerCase();
+            try{
+                socket.startHandshake();
+                Certificate[] certs = socket.getSession().getPeerCertificates();
+                Certificate cert = certs[0];
+                LANThumbprint = DatatypeConverter.printHexBinary(
+                        MessageDigest.getInstance("SHA-1").digest(
+                                cert.getEncoded())).toLowerCase();
+            }catch(CertificateEncodingException e){
+                e.printStackTrace();
+            }
         } catch (UnknownHostException e) {
-            e.printStackTrace();
-        } catch (CertificateEncodingException e) {
             e.printStackTrace();
         } catch (NoSuchAlgorithmException e) {
             e.printStackTrace();
