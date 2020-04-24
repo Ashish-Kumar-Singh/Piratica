@@ -66,9 +66,9 @@ public class MainActivity extends AppCompatActivity {
                     public void onClick(View v) {
                         String user = website.getText().toString();
                         Log.e("input", user);
-                        userInput uinput = new userInput();
-                        uinput.setWebsite(user);
-                        openActivity();
+                        Intent intent = new Intent(getApplicationContext(), information.class);
+                        intent.putExtra("user_input",user);
+                        startActivity(intent);
                     }
                 });
             }

@@ -1,5 +1,6 @@
 package com.example.piratica;
 
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -30,7 +31,7 @@ public class information extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
+        Intent intent = getIntent();
         setContentView(R.layout.activity_information);
         InfoText = findViewById(R.id.InfoText);
         apiText = findViewById(R.id.apitext);
@@ -38,7 +39,7 @@ public class information extends AppCompatActivity {
         String LANThumbprint = null;
         String NetThumbprint = null;
 
-        final String link = "rte.ie";
+        final String link = intent.getStringExtra("user_input");
         try {
             LANThumbprint = new NetIpAdd().execute(link).get();
             Log.e("Local Thumbprint ", LANThumbprint);
@@ -67,16 +68,19 @@ public class information extends AppCompatActivity {
             e.printStackTrace();
         }
 
-        if(LANThumbprint.equalsIgnoreCase(NetThumbprint)){
-            InfoText.setText("No Hackers on Network :The Unique Thumbprints match " +
-                    "\n Local Network THumbprint "+LANThumbprint+"\n API Thumbprint "+NetThumbprint);
-        }
-        else if(LANThumbprint == null){
-            InfoText.setText("Unable to make an HTTPS Connection| The Network is being monitored");
-        }
-        else {
-            InfoText.setText("Changes in Certificate Noticed: Hacker Detected");
-        }
+       if(LANThumbprint!=null && NetThumbprint != null){
+           if(LANThumbprint.equalsIgnoreCase(NetThumbprint)){
+               InfoText.setText("No Hackers on Network :The Unique Thumbprints match " +
+                       "\n Local Network THumbprint "+LANThumbprint+"\n API Thumbprint "+NetThumbprint);
+           }
+           else {
+               InfoText.setText("Changes in Certificate Noticed: Hacker Detected");
+           }
+       }
+       else {
+           InfoText.setText("Unable to Establish Secure Connection: Network Maybe COmpromised");
+       }
+
 
 
         OkHttpClient client = new OkHttpClient();
@@ -127,7 +131,7 @@ public class information extends AppCompatActivity {
                                             }
                                             if(!isChanged){
                                                 apiText.setText("Hacker Detected");
-                                                apiText.append("\n Local IP "+netAddress);
+                                                apiText.append("\n DNS Record IP on LAN "+netAddress);
 
                                             }
                                             else{

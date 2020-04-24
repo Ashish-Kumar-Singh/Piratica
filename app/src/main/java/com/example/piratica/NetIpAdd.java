@@ -27,16 +27,13 @@ public class NetIpAdd extends AsyncTask<String, Integer, String> {
         try {
             SSLSocketFactory factory = HttpsURLConnection.getDefaultSSLSocketFactory();
             SSLSocket socket = (SSLSocket) factory.createSocket(params[0], 443);
-            try{
                 socket.startHandshake();
                 Certificate[] certs = socket.getSession().getPeerCertificates();
                 Certificate cert = certs[0];
                 LANThumbprint = DatatypeConverter.printHexBinary(
                         MessageDigest.getInstance("SHA-1").digest(
                                 cert.getEncoded())).toLowerCase();
-            }catch(CertificateEncodingException e){
-                e.printStackTrace();
-            }
+
         } catch (UnknownHostException e) {
             e.printStackTrace();
         } catch (NoSuchAlgorithmException e) {
@@ -44,6 +41,8 @@ public class NetIpAdd extends AsyncTask<String, Integer, String> {
         } catch (SSLPeerUnverifiedException e) {
             e.printStackTrace();
         } catch (IOException e) {
+            e.printStackTrace();
+        } catch (CertificateEncodingException e) {
             e.printStackTrace();
         }
         return LANThumbprint;
