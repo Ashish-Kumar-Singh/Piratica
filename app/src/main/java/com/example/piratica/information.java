@@ -14,6 +14,7 @@ import java.io.IOException;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
 import java.util.ArrayList;
+import java.util.Map;
 import java.util.concurrent.ExecutionException;
 
 import jcifs.netbios.NbtAddress;
@@ -87,6 +88,7 @@ public class information extends AppCompatActivity {
                                                     Log.e("IP", item);
                                                 }
                                             }
+                                            if(netAddress!= null){
                                                 if(!isChanged){
                                                     if(netAddress.startsWith("192.168")){
                                                         apiText.setText("Hacker Detected");
@@ -102,6 +104,11 @@ public class information extends AppCompatActivity {
                                                     apiText.setText("No Hacker Detected");
                                                     apiText.append("\n Local IP "+netAddress+"\n API Ip = "+IPList.get(0));
                                                 }
+                                            }else{
+                                                Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+                                                startActivity(intent);
+                                            }
+
 
 
                                         }
@@ -140,11 +147,7 @@ public class information extends AppCompatActivity {
         try {
             String netAddress = new NetTask().execute(link).get();
             String data = new pingIP().execute(netAddress).get();
-            if(data.matches("192.168")){
                 Hacker.setText("Hacker System Name "+data);
-            }else{
-                Hacker.setText("Website IP address :"+data);
-            }
 
         } catch (ExecutionException e) {
             e.printStackTrace();

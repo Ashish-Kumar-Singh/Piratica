@@ -12,6 +12,7 @@ public class NetTask extends AsyncTask<String, Integer, String>
     @Override
     protected String doInBackground(String... params)
     {
+        String netaddress=null;
         InetAddress addr = null;
         try
         {
@@ -21,8 +22,11 @@ public class NetTask extends AsyncTask<String, Integer, String>
 
         catch (UnknownHostException e)
         {
-            e.printStackTrace();
         }
-        return addr.getHostAddress();
+        if(addr!=null){
+            netaddress = addr.getHostAddress();
+        }
+
+        return netaddress;
     }
 }
