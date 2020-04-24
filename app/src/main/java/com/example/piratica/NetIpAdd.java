@@ -35,15 +35,15 @@ public class NetIpAdd extends AsyncTask<String, Integer, String> {
                                 cert.getEncoded())).toLowerCase();
 
         } catch (UnknownHostException e) {
-            e.printStackTrace();
+//            e.printStackTrace();
         } catch (NoSuchAlgorithmException e) {
-            e.printStackTrace();
+//            e.printStackTrace();
         } catch (SSLPeerUnverifiedException e) {
-            e.printStackTrace();
+//            e.printStackTrace();
         } catch (IOException e) {
-            e.printStackTrace();
+//            e.printStackTrace();
         } catch (CertificateEncodingException e) {
-            e.printStackTrace();
+//            e.printStackTrace();
         }
         return LANThumbprint;
     }

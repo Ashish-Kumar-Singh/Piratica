@@ -40,48 +40,6 @@ public class information extends AppCompatActivity {
         String NetThumbprint = null;
 
         final String link = intent.getStringExtra("user_input");
-        try {
-            LANThumbprint = new NetIpAdd().execute(link).get();
-            Log.e("Local Thumbprint ", LANThumbprint);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        } catch (ExecutionException e) {
-            e.printStackTrace();
-        }
-
-        try {
-         String netAddress = new NetTask().execute(link).get();
-            String data = new pingIP().execute(netAddress).get();
-            Hacker.setText(data);
-        } catch (ExecutionException e) {
-            e.printStackTrace();
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-
-       try {
-            NetThumbprint = new GetUrlContentTask().execute(link).get();
-            Log.e("API Thumbprint ", NetThumbprint);
-        } catch (ExecutionException e) {
-            e.printStackTrace();
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-
-       if(LANThumbprint!=null && NetThumbprint != null){
-           if(LANThumbprint.equalsIgnoreCase(NetThumbprint)){
-               InfoText.setText("No Hackers on Network :The Unique Thumbprints match " +
-                       "\n Local Network THumbprint "+LANThumbprint+"\n API Thumbprint "+NetThumbprint);
-           }
-           else {
-               InfoText.setText("Changes in Certificate Noticed: Hacker Detected");
-           }
-       }
-       else {
-           InfoText.setText("Unable to Establish Secure Connection: Network Maybe COmpromised");
-       }
-
-
 
         OkHttpClient client = new OkHttpClient();
         String url = "https://www.whoisxmlapi.com/whoisserver/DNSService?apiKey="+APIKey+"&domainName="+link+"&type=1&outputFormat=JSON";
@@ -129,15 +87,22 @@ public class information extends AppCompatActivity {
                                                     Log.e("IP", item);
                                                 }
                                             }
-                                            if(!isChanged){
-                                                apiText.setText("Hacker Detected");
-                                                apiText.append("\n DNS Record IP on LAN "+netAddress);
+                                                if(!isChanged){
+                                                    if(netAddress.startsWith("192.168")){
+                                                        apiText.setText("Hacker Detected");
+                                                        apiText.append("\n DNS Record IP on LAN " + netAddress + "\n API Ip = " + IPList.get(0));
+                                                    }
+                                                    else {
+                                                        apiText.setText("Local IP Different but no hacker found");
+                                                        apiText.append("\n DNS Record IP " + netAddress + "\n API Ip = " + IPList.get(0));
+                                                    }
 
-                                            }
-                                            else{
-                                                apiText.setText("No Hacker Detected");
-                                                apiText.append("\n Local IP "+netAddress+"\n API Ip = "+IPList.get(0));
-                                            }
+                                                }
+                                                else{
+                                                    apiText.setText("No Hacker Detected");
+                                                    apiText.append("\n Local IP "+netAddress+"\n API Ip = "+IPList.get(0));
+                                                }
+
 
                                         }
                                         catch (Exception e1)
@@ -162,6 +127,43 @@ public class information extends AppCompatActivity {
 
         }catch(Exception e){
             apiText.setText("Hacker Detected");
+        }
+        try {
+            LANThumbprint = new NetIpAdd().execute(link).get();
+//            Log.e("Local Thumbprint ", LANThumbprint);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        } catch (ExecutionException e) {
+            e.printStackTrace();
+        }
+
+        try {
+            String netAddress = new NetTask().execute(link).get();
+            String data = new pingIP().execute(netAddress).get();
+            Hacker.setText(data);
+        } catch (ExecutionException e) {
+            e.printStackTrace();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+
+        try {
+            NetThumbprint = new GetUrlContentTask().execute(link).get();
+//            Log.e("API Thumbprint ", NetThumbprint);
+        } catch (Exception e) {
+
+        }
+
+        if(LANThumbprint!=null && NetThumbprint != null){
+            if(LANThumbprint.equalsIgnoreCase(NetThumbprint)){
+                InfoText.setText(String.format("No Hackers on Network :The Unique Thumbprints match \n Local Network Thumbprint %s\n API Thumbprint %s", LANThumbprint, NetThumbprint));
+            }
+            else {
+                InfoText.setText(String.format("Changes in Certificate Noticed: Hacker Detected\n Local Network Thumbprint %s\n API Thumbprint %s", LANThumbprint, NetThumbprint));
+            }
+        }
+        else {
+            InfoText.setText(String.format("Unable to Establish Secure Connection: Network Maybe Compromised\n Local Network Thumbprint %s\n API Thumbprint %s", LANThumbprint, NetThumbprint));
         }
 
 

@@ -15,7 +15,7 @@ public class pingIP extends AsyncTask<String, Integer, String> {
     protected String doInBackground(String... params) {
         String hostname=null;
         try {
-            InetAddress addr = NbtAddress.getByName("192.168.86.63").getInetAddress();
+            InetAddress addr = NbtAddress.getByName(params[0]).getInetAddress();
              hostname = addr.getHostName();
 //            String hostmane = addr.getHostName();
             Log.e("ip net address", hostname);

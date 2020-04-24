@@ -15,6 +15,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.net.InetAddress;
 import java.net.UnknownHostException;
@@ -65,10 +66,15 @@ public class MainActivity extends AppCompatActivity {
                     @Override
                     public void onClick(View v) {
                         String user = website.getText().toString();
-                        Log.e("input", user);
-                        Intent intent = new Intent(getApplicationContext(), information.class);
-                        intent.putExtra("user_input",user);
-                        startActivity(intent);
+                        String EMAIL_PATTERN = "^[_A-Za-z0-9-]+(\\.[_A-Za-z0-9-]+)*(\\.[A-Za-z]{2,})$";
+                        if(user.isEmpty() || !user.matches(EMAIL_PATTERN)){
+                            Toast.makeText(getApplicationContext(),"User Input Required in website format",Toast.LENGTH_SHORT).show();
+                        }else {
+                            Log.e("input", user);
+                            Intent intent = new Intent(getApplicationContext(), information.class);
+                            intent.putExtra("user_input",user);
+                            startActivity(intent);
+                        }
                     }
                 });
             }
