@@ -140,7 +140,12 @@ public class information extends AppCompatActivity {
         try {
             String netAddress = new NetTask().execute(link).get();
             String data = new pingIP().execute(netAddress).get();
-            Hacker.setText(data);
+            if(data.matches("192.168")){
+                Hacker.setText("Hacker System Name "+data);
+            }else{
+                Hacker.setText("Website IP address :"+data);
+            }
+
         } catch (ExecutionException e) {
             e.printStackTrace();
         } catch (InterruptedException e) {
