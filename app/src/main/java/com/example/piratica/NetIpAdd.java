@@ -2,6 +2,7 @@ package com.example.piratica;
 
 
 import android.os.AsyncTask;
+import android.util.Log;
 
 import java.io.IOException;
 import java.net.InetAddress;
@@ -36,15 +37,20 @@ public class NetIpAdd extends AsyncTask<String, Integer, String> {
 
         } catch (UnknownHostException e) {
 //            e.printStackTrace();
+            Log.e("Thumprint from Network", "Unable to Fetch");
         } catch (NoSuchAlgorithmException e) {
 //            e.printStackTrace();
+            Log.e("Thumprint from Network", "Unable to Fetch");
         } catch (SSLPeerUnverifiedException e) {
 //            e.printStackTrace();
+            Log.e("Thumprint from Network", "Unable to Fetch");
         } catch (IOException e) {
 //            e.printStackTrace();
+            Log.e("Thumprint from Network", "Unable to Fetch");
         } catch (CertificateEncodingException e) {
 //            e.printStackTrace();
-        }
+            Log.e("Thumprint from Network", "Unable to Fetch");
+        };
         return LANThumbprint;
     }
 }

@@ -1,10 +1,13 @@
 package com.example.piratica;
 
 import android.content.Intent;
+import android.graphics.Color;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -27,6 +30,7 @@ import okhttp3.Response;
 public class information extends AppCompatActivity {
     private TextView InfoText;
     private TextView apiText;
+    private TextView header;
     private TextView Hacker;
     private String APIKey= "at_nZNsncxr1W3JtbG0qAiYFF1RVtv6I";
     @Override
@@ -35,7 +39,8 @@ public class information extends AppCompatActivity {
         Intent intent = getIntent();
         setContentView(R.layout.activity_information);
         InfoText = findViewById(R.id.InfoText);
-        apiText = findViewById(R.id.apitext);
+        apiText = findViewById(R.id.AlertText);
+        header = findViewById(R.id.HeaderText);
         Hacker = findViewById(R.id.hacker);
         String LANThumbprint = null;
         String NetThumbprint = null;
@@ -91,18 +96,29 @@ public class information extends AppCompatActivity {
                                             if(netAddress!= null){
                                                 if(!isChanged){
                                                     if(netAddress.startsWith("192.168")){
-                                                        apiText.setText("Hacker Detected");
-                                                        apiText.append("\n DNS Record IP on LAN " + netAddress + "\n API Ip = " + IPList.get(0));
+                                                        header.setText("Hacker Detected");
+                                                        header.setTextColor(Color.parseColor("#EC4C33"));
+                                                        apiText.setText("\n IP address of website" + netAddress + "\n Actual Ip = " + IPList.get(0));
+                                                        try {
+                                                            String data = new pingIP().execute(netAddress).get();
+                                                            if(data!= null){
+                                                                Hacker.setText("Hacker System Name "+data);
+                                                            }
+                                                        } catch (ExecutionException e) {
+                                                        } catch (InterruptedException e) {
+                                                        }
                                                     }
                                                     else {
-                                                        apiText.setText("Local IP Different but no hacker found");
-                                                        apiText.append("\n DNS Record IP " + netAddress + "\n API Ip = " + IPList.get(0));
+                                                        header.setText("No Hacker Detected");
+                                                        header.setTextColor(Color.parseColor("#5CCB1C"));
+                                                        apiText.setText("\n DNS Record IP " + netAddress + "\n API Ip = " + IPList.get(0));
                                                     }
 
                                                 }
                                                 else{
-                                                    apiText.setText("No Hacker Detected");
-                                                    apiText.append("\n Local IP "+netAddress+"\n API Ip = "+IPList.get(0));
+                                                    header.setText("No Hacker Detected");
+                                                    header.setTextColor(Color.parseColor("#5CCB1C"));
+                                                    apiText.setText("\n Local IP "+netAddress+"\n API Ip = "+IPList.get(0));
                                                 }
                                             }else{
                                                 Intent intent = new Intent(getApplicationContext(), MainActivity.class);
@@ -129,11 +145,11 @@ public class information extends AppCompatActivity {
                 });
 
             }catch(Exception e){
-                apiText.setText("Hacker Detected");
+                Toast.makeText(getApplicationContext(),"Unable to Access Website",Toast.LENGTH_SHORT).show();
             }
 
         }catch(Exception e){
-            apiText.setText("Hacker Detected");
+            Toast.makeText(getApplicationContext(),"Unable to Access Website",Toast.LENGTH_SHORT).show();
         }
         try {
             LANThumbprint = new NetIpAdd().execute(link).get();
@@ -144,16 +160,7 @@ public class information extends AppCompatActivity {
             e.printStackTrace();
         }
 
-        try {
-            String netAddress = new NetTask().execute(link).get();
-            String data = new pingIP().execute(netAddress).get();
-                Hacker.setText("Hacker System Name "+data);
 
-        } catch (ExecutionException e) {
-            e.printStackTrace();
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
 
         try {
             NetThumbprint = new GetUrlContentTask().execute(link).get();
@@ -173,7 +180,6 @@ public class information extends AppCompatActivity {
         else {
             InfoText.setText(String.format("Unable to Establish Secure Connection: Network Maybe Compromised\n Local Network Thumbprint %s\n API Thumbprint %s", LANThumbprint, NetThumbprint));
         }
-
 
     }
 

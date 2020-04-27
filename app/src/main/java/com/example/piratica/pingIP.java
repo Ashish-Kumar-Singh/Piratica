@@ -16,6 +16,20 @@ public class pingIP extends AsyncTask<String, Integer, String> {
         String hostname=null;
         try {
             InetAddress addr = NbtAddress.getByName(params[0]).getInetAddress();
+//            byte[] mac = NbtAddress.getByName(params[0]).getMacAddress();
+//            if (mac != null) {
+//                /*
+//                 * Extract each array of mac address and convert it
+//                 * to hexadecimal with the following format
+//                 * 08-00-27-DC-4A-9E.
+//                 */
+//                for (int i = 0; i < mac.length; i++) {
+//                    System.out.format("%02X%s",
+//                            mac[i], (i < mac.length - 1) ? "-" : "");
+//                }
+//            } else {
+//                Log.e("Address doesn't exist",null);
+//            }
              hostname = addr.getHostName();
 //            String hostmane = addr.getHostName();
             Log.e("ip net address", hostname);

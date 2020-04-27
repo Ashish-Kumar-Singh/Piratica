@@ -22,6 +22,7 @@ public class NetTask extends AsyncTask<String, Integer, String>
 
         catch (UnknownHostException e)
         {
+            Log.e("Local IP:", "Unable to fetch");
         }
         if(addr!=null){
             netaddress = addr.getHostAddress();

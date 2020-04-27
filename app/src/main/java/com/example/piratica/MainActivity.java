@@ -63,17 +63,17 @@ public class MainActivity extends AppCompatActivity {
                         (ipAddress >> 8 & 0xff),
                         (ipAddress >> 16 & 0xff),
                         (ipAddress >> 24 & 0xff));
-                ipaddress.setText(FormatedIpAddress2);
-                try {
-                   check = new getAllIp().execute("192.168.86").get();
-                    for (Map.Entry<String, String> entry : check.entrySet()) {
-                        Log.e("key",entry.getKey() + " = " + entry.getValue());
-                    }
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                } catch (ExecutionException e) {
-                    e.printStackTrace();
-                }
+                ipaddress.setText("IP: " +FormatedIpAddress2);
+//                try {
+//                   check = new getAllIp().execute("192.168.86").get();
+//                    for (Map.Entry<String, String> entry : check.entrySet()) {
+//                        Log.e("key",entry.getKey() + " = " + entry.getValue());
+//                    }
+//                } catch (InterruptedException e) {
+//                    e.printStackTrace();
+//                } catch (ExecutionException e) {
+//                    e.printStackTrace();
+//                }
                 rollButton.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {

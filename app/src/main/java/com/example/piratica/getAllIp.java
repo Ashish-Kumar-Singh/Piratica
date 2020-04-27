@@ -16,7 +16,7 @@ public class getAllIp extends AsyncTask<String, Integer, Map<String, String>> {
      public Map<String, String> map = new HashMap<String, String>();
     @Override
     protected HashMap<String, String> doInBackground(String... params) {
-        int timeout = 10;
+        int timeout = 30;
         for (int i = 1; i < 255; i++) {
             String host = params[0] + "." + i;
             try {
