@@ -2,11 +2,11 @@ package com.example.piratica;
 
 public class LocalDeviceInfo {
     String Ip;
-    String MacAddress;
+    String HostName;
 
-    public LocalDeviceInfo(String ip, String macAddress) {
+    public LocalDeviceInfo(String ip, String hostname) {
         Ip = ip;
-        MacAddress = macAddress;
+        HostName = hostname;
     }
 
     public String getIp() {
@@ -17,11 +17,11 @@ public class LocalDeviceInfo {
         Ip = ip;
     }
 
-    public String getMacAddress() {
-        return MacAddress;
+    public String getHostName() {
+        return HostName;
     }
 
-    public void setMacAddress(String macAddress) {
-        MacAddress = macAddress;
+    public void setHostName(String hostName) {
+        HostName = hostName;
     }
 }

@@ -1,6 +1,7 @@
 package com.example.piratica;
 
 import android.os.AsyncTask;
+import android.util.Log;
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
@@ -22,7 +23,8 @@ public class GetUrlContentTask extends AsyncTask<String, Integer, String> {
             fingerprint = fingerprint.replaceAll(":", "");
         }
         catch (Exception e){
-            e.printStackTrace();
+//            e.printStackTrace();
+            Log.e("Thumprint from API :", "Unable to Fetch");
         }
 
         return fingerprint;

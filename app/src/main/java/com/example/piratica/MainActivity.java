@@ -8,6 +8,7 @@ import android.net.wifi.SupplicantState;
 import android.net.wifi.WifiInfo;
 import android.net.wifi.WifiManager;
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
@@ -15,9 +16,13 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import java.io.IOException;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
+import java.util.Map;
+import java.util.concurrent.ExecutionException;
 
 import jcifs.netbios.NbtAddress;
 
@@ -28,6 +33,7 @@ public class MainActivity extends AppCompatActivity {
     private  TextView ipstuff;
     private TextView ssid;
     private EditText website;
+    public  Map<String, String> check;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,12 +48,9 @@ public class MainActivity extends AppCompatActivity {
             return;
         }else{
 
-            // Write you code here if permission already given.
-//            getInfo gInfo = new getInfo();
-//            String mac = gInfo.getMacAddressFromIP("192.168.0.52");
-//            website.setText(mac);
             WifiManager wifiManager =(WifiManager) getApplicationContext().getSystemService(Context.WIFI_SERVICE);
             WifiInfo wifiInfo = wifiManager.getConnectionInfo();
+
             if (wifiInfo == null) {
 
             } else {
@@ -60,15 +63,30 @@ public class MainActivity extends AppCompatActivity {
                         (ipAddress >> 8 & 0xff),
                         (ipAddress >> 16 & 0xff),
                         (ipAddress >> 24 & 0xff));
-                ipaddress.setText(FormatedIpAddress2);
+                ipaddress.setText("IP: " +FormatedIpAddress2);
+//                try {
+//                   check = new getAllIp().execute("192.168.86").get();
+//                    for (Map.Entry<String, String> entry : check.entrySet()) {
+//                        Log.e("key",entry.getKey() + " = " + entry.getValue());
+//                    }
+//                } catch (InterruptedException e) {
+//                    e.printStackTrace();
+//                } catch (ExecutionException e) {
+//                    e.printStackTrace();
+//                }
                 rollButton.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
                         String user = website.getText().toString();
-                        Log.e("input", user);
-                        Intent intent = new Intent(getApplicationContext(), information.class);
-                        intent.putExtra("user_input",user);
-                        startActivity(intent);
+                        String EMAIL_PATTERN = "^[_A-Za-z0-9-]+(\\.[_A-Za-z0-9-]+)*(\\.[A-Za-z]{2,})$";
+                        if(user.isEmpty() || !user.matches(EMAIL_PATTERN)){
+                            Toast.makeText(getApplicationContext(),"User Input Required in website format",Toast.LENGTH_SHORT).show();
+                        }else {
+                            Log.e("input", user);
+                            Intent intent = new Intent(getApplicationContext(), information.class);
+                            intent.putExtra("user_input",user);
+                            startActivity(intent);
+                        }
                     }
                 });
             }
@@ -76,9 +94,5 @@ public class MainActivity extends AppCompatActivity {
 
 
         }
-    public void openActivity(){
-        Intent intent = new Intent(this, information.class);
-        startActivity(intent);
 
-    }
 }
