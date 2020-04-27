@@ -9,61 +9,48 @@
 
     <TextView
         android:id="@+id/hacker"
-        android:layout_width="0dp"
-        android:layout_height="58dp"
+        android:layout_width="320dp"
+        android:layout_height="73dp"
+        android:layout_gravity="center"
         android:layout_marginStart="8dp"
         android:layout_marginEnd="8dp"
         android:layout_marginBottom="8dp"
+        android:textAlignment="center"
         android:textColor="#FFFFFF"
         android:textSize="14sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintHorizontal_bias="0.533"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.839" />
+        app:layout_constraintVertical_bias="0.756" />
 
     <TextView
         android:id="@+id/InfoText"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="320dp"
+        android:layout_height="125dp"
+        android:layout_gravity="center"
         android:layout_marginStart="8dp"
         android:layout_marginEnd="8dp"
-        android:textSize="14sp"
         android:textColor="#FFFFFF"
+        android:textSize="18sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintHorizontal_bias="0.533"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/hacker"
-        app:layout_constraintVertical_bias="0.747" />
-
-    <TextView
-        android:id="@+id/apitext"
-        android:layout_width="8dp"
-        android:layout_height="36dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="183dp"
-        android:layout_marginEnd="8dp"
-        android:textColor="#FFFFFF"
-        android:textSize="14sp"
-        app:layout_constraintBottom_toTopOf="@+id/hacker"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/AlertText"
-        app:layout_constraintVertical_bias="0.0" />
+        app:layout_constraintVertical_bias="0.596" />
 
     <TextView
         android:id="@+id/HeaderText"
         android:layout_width="320dp"
         android:layout_height="75dp"
+        android:layout_gravity="center"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
         android:layout_marginEnd="8dp"
         android:layout_marginBottom="8dp"
         android:textAlignment="center"
-        android:text="@string/compromised_websites"
         android:textColor="#FFFFFF"
         android:textSize="30sp"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -74,19 +61,32 @@
 
     <TextView
         android:id="@+id/AlertText"
-        android:layout_width="278dp"
-        android:layout_height="199dp"
+        android:layout_width="322dp"
+        android:layout_height="104dp"
+        android:layout_gravity="center"
         android:layout_marginStart="8dp"
         android:layout_marginTop="165dp"
         android:layout_marginEnd="8dp"
-        android:text="@string/no_hackers_detected"
+        android:textAlignment="center"
         android:textColor="#FFFFFF"
-        android:textSize="25sp"
+        android:textSize="20sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.495"
+        app:layout_constraintHorizontal_bias="0.52"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.0" />
+        app:layout_constraintVertical_bias="0.432" />
+
+    <ImageView
+        android:id="@+id/networkState"
+        android:layout_width="119dp"
+        android:layout_height="156dp"
+        android:layout_marginTop="54dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/HeaderText"
+        app:layout_constraintVertical_bias="0.0"
+        app:srcCompat="@drawable/secure" />
 
 </android.support.constraint.ConstraintLayout>
