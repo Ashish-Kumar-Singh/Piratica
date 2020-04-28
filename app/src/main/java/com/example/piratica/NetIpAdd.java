@@ -28,6 +28,7 @@ public class NetIpAdd extends AsyncTask<String, Integer, String> {
         try {
             SSLSocketFactory factory = HttpsURLConnection.getDefaultSSLSocketFactory();
             SSLSocket socket = (SSLSocket) factory.createSocket(params[0], 443);
+//            socket.setSoTimeout(300);
                 socket.startHandshake();
                 Certificate[] certs = socket.getSession().getPeerCertificates();
                 Certificate cert = certs[0];

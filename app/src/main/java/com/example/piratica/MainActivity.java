@@ -18,9 +18,11 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.io.File;
 import java.io.IOException;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
+import java.util.ArrayList;
 import java.util.Map;
 import java.util.concurrent.ExecutionException;
 
@@ -77,6 +79,7 @@ public class MainActivity extends AppCompatActivity {
                 rollButton.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
+
                         String user = website.getText().toString();
                         String EMAIL_PATTERN = "^[_A-Za-z0-9-]+(\\.[_A-Za-z0-9-]+)*(\\.[A-Za-z]{2,})$";
                         if(user.isEmpty() || !user.matches(EMAIL_PATTERN)){
@@ -94,5 +97,6 @@ public class MainActivity extends AppCompatActivity {
 
 
         }
+
 
 }
