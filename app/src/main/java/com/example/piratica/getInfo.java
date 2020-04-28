@@ -31,12 +31,13 @@ public class getInfo extends AsyncTask<String, Integer, ArrayList<String>> {
     protected ArrayList<String> doInBackground(String... params) {
         URL url;
         String link = params[0];
-        ArrayList<String>IPList = new ArrayList<String>();
+        ArrayList<String>IPList = new ArrayList<String>();;
+        {
             try {
                 url = new URL("https://www.whoisxmlapi.com/whoisserver/DNSService?apiKey="+APIKey+"&domainName="+link+"&type=1&outputFormat=JSON");
                 HttpURLConnection httpConn = (HttpURLConnection)url.openConnection();
-                httpConn.setRequestMethod("GET");
                 httpConn.setConnectTimeout(300);
+                httpConn.setRequestMethod("GET");
                 int responseCode = httpConn.getResponseCode();
                 if(responseCode == HttpURLConnection.HTTP_OK){
                     InputStream in = new BufferedInputStream(httpConn.getInputStream());
@@ -72,7 +73,10 @@ public class getInfo extends AsyncTask<String, Integer, ArrayList<String>> {
                 Log.e("API IP :", "Unable to Fetch");
             } catch (IOException e) {
                 Log.e("API IP :", "Unable to Fetch");
+                e.printStackTrace();
+                Log.e("API IP :", "Unable to Fetch");
             }
+        }
         return  IPList;
     }
 }
