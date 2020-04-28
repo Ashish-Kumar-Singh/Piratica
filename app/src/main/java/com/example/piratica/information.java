@@ -48,10 +48,12 @@ public class information extends AppCompatActivity {
         apiText = findViewById(R.id.AlertText);
         header = findViewById(R.id.HeaderText);
         Hacker = findViewById(R.id.hacker);
-//        networkState = (ImageView) findViewById(R.id.networkState);
+        networkState = (ImageView) findViewById(R.id.networkState);
         String LANThumbprint = null;
         String NetThumbprint = null;
-
+        String netAddress = null;
+        ArrayList<String>IPList = new ArrayList<>();
+        Boolean isChanged = false;
         final String link = intent.getStringExtra("user_input");
 
 //        OkHttpClient client = new OkHttpClient();
@@ -160,105 +162,137 @@ public class information extends AppCompatActivity {
 //        }catch(Exception e){
 //            Toast.makeText(getApplicationContext(),"Unable to Access Website",Toast.LENGTH_SHORT).show();
 //        }
-
-        try
-        {
-            ArrayList<String>IPList = new ArrayList<>();
-            try {
-                IPList = new getInfo().execute(link).get();
+        try {
+            Log.e("1 :", "Getting Local IP");
+            netAddress = new NetTask().execute(link).get();
+            Log.e("2 :", "Got Local IP");
+        } catch (ExecutionException e) {
+            e.printStackTrace();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        try {
+            Log.e("3 :", "Getting API IP");
+             IPList = new getInfo().execute(link).get();
+            Log.e("4 :", "Got API IP");
             } catch (ExecutionException e) {
-//                e.printStackTrace();
                 Log.e("API IP :", "Unable to Fetch");
             } catch (InterruptedException e) {
-//                e.printStackTrace();
                 Log.e("API IP :", "Unable to Fetch");
             }
 
-            String netAddress = null;
-            netAddress = new NetTask().execute(link).get();
-            Boolean isChanged = false;
+
             if(IPList!=null){
+                Log.e("5 :", "IPList is not null");
                 for(String item: IPList){
                     if(item.equals(netAddress)){
                         isChanged=true;
                         Log.e("IP", item);
+                    }else{
+                        isChanged=false;
+                        Log.e("5-1:", "IP does not match");
                     }
                 }
+            }else{
+                Log.e("5 :", "IPList is null");
             }
-            if(netAddress!= null){
+
+            if(netAddress!= null && IPList!=null){
+                Log.e("6:", "Loacl Ip not null");
                 if(!isChanged){
+                    Log.e("6-1 :", "Change in IPs noticed");
                     if(netAddress.startsWith("192.168")){
+                        Log.e("6-1-1 :", "Hacker Detected");
                         header.setText("Hacker Detected");
                         header.setTextColor(Color.parseColor("#EC4C33"));
-                        apiText.setText("\n IP address of website" + netAddress + "\n Actual Ip = " + IPList.get(0));
-                        networkState.setImageResource(R.drawable.alert);
+                        apiText.setText("\n IP address of website" + netAddress);
                         try {
+                            networkState.setImageResource(R.drawable.alert);
+                            Log.e("6-1-2 :", "Getting hacker info");
                             String data = new pingIP().execute(netAddress).get();
+                            Log.e("6-1-2 :", "Got hacker info");
                             if(data!= null){
+                                Log.e("6-1-2-1 :", "Displaying hacker info");
                                 Hacker.setText("Hacker System Name "+data);
                                 Hacker.append("\n Hacker IP: "+netAddress);
                             }
                         } catch (ExecutionException e) {
+                            Log.e("6-1-2-2 :", "Displaying hacker info Error");
                         } catch (InterruptedException e) {
+                            Log.e("6-1-2-2 :", "Displaying hacker info Error");
                         }
                     }
                     else {
+                        Log.e("6-2-1 :", "No Hacker Detected");
                         header.setText("No Hacker Detected");
-                        header.setTextColor(Color.parseColor("#5CCB1C"));
-                        apiText.setText("\n DNS Record IP " + netAddress + "\n API Ip = " + IPList.get(0));
+                        apiText.setText("\n Local IP "+netAddress+"\n API Ip = "+IPList.get(0));
                     }
 
                 }
                 else{
+                    Log.e("6-2 :", "No Hacker Detected");
                     header.setText("No Hacker Detected");
-                    header.setTextColor(Color.parseColor("#5CCB1C"));
                     apiText.setText("\n Local IP "+netAddress+"\n API Ip = "+IPList.get(0));
                 }
             }else{
-                apiText.setText("\n Local IP "+netAddress);
+                Log.e("6 :", "Local Ip is empty");
+                networkState.setImageResource(R.drawable.alert);
+                apiText.setText("Please input a Valid Website");
             }
 
 
 
-        }
-        catch (Exception e1)
-        {
-            e1.printStackTrace();
-        }
-
-
         try {
+            Log.e("7 :", "Getting Local Thumbprint");
             LANThumbprint = new NetIpAdd().execute(link).get();
-//            Log.e("Local Thumbprint ", LANThumbprint);
+            Log.e("7 :", "Got Local Thumbprint");
         } catch (InterruptedException e) {
-//            e.printStackTrace();
             Log.e("Local Thumbprint :", "Unable to Fetch");
         } catch (ExecutionException e) {
-//            e.printStackTrace();
             Log.e("Local Thumbprint :", "Unable to Fetch");
         }
 
-
-
-
         try {
+            Log.e("8 :", "Getting API Thumbprint");
             NetThumbprint = new GetUrlContentTask().execute(link).get();
-//            Log.e("API Thumbprint ", NetThumbprint);
+            Log.e("8 :", "Got API Thumbprint");
         } catch (Exception e) {
             Log.e("API Thumbprint :", "Unable to Fetch");
         }
+               if(LANThumbprint!=null && NetThumbprint != null){
+                   Log.e("9 :", "Thumbprints are not null");
+                        if(LANThumbprint.equalsIgnoreCase(NetThumbprint)){
+                            Log.e("9-1 :", "Thumbprints matches");
+                            InfoText.setText(String.format("No Hackers on Network :The Unique Thumbprints match\n Local Network Thumbprint %s\n API Thumbprint %s", LANThumbprint, NetThumbprint));
+                        }
+                        else {
+                            Log.e("9-1 :", "Thumbprints do not match");
+                            if(netAddress.startsWith("192.168")){
+                                Log.e("9-1-1 :", "Thumbprints do not match and Hacker IP");
+                                header.setText("Hacker Detected");
+                                header.setTextColor(Color.parseColor("#EC4C33"));
+                                InfoText.setText(String.format("Changes in Certificate Noticed: Hacker Detected\n Local Network Thumbprint %s\n API Thumbprint %s", LANThumbprint, NetThumbprint));
+                        }
+                        else {
+                                Log.e("9-1-2 :", "Thumbprints do not match but no Hacker");
+                            InfoText.setText(String.format("No Hackers on Network :The Thumbprints are however different\n Local Network Thumbprint %s\n API Thumbprint %s", LANThumbprint, NetThumbprint));
+                        }
+                        }
 
-        if(LANThumbprint!=null && NetThumbprint != null){
-            if(LANThumbprint.equalsIgnoreCase(NetThumbprint)){
-                InfoText.setText(String.format("No Hackers on Network :The Unique Thumbprints match\n Local Network Thumbprint %s\n API Thumbprint %s", LANThumbprint, NetThumbprint));
-            }
-            else {
-                InfoText.setText(String.format("Changes in Certificate Noticed: Hacker Detected\n Local Network Thumbprint %s\n API Thumbprint %s", LANThumbprint, NetThumbprint));
-            }
-        }
-        else {
-            InfoText.setText(String.format("Network Maybe Compromised\n Local Network Thumbprint %s\n API Thumbprint %s", LANThumbprint, NetThumbprint));
-        }
+                }
+                else {
+                   if(netAddress !=null && netAddress.startsWith("192.168")){
+                       Log.e("9-2 :", "Thumbprints are empty and Ip matches HAcker");
+                       header.setText("Hacker Detected");
+                       header.setTextColor(Color.parseColor("#EC4C33"));
+                       InfoText.setText(String.format("Network Maybe Compromised\n Local Network Thumbprint %s\n API Thumbprint %s", LANThumbprint, NetThumbprint));
+                   }
+                   else{
+                       Log.e("9-2 :", "Thumbprints are empty due to  Invalid Website");
+                   }
+
+                }
+
 
     }
 
