@@ -32,6 +32,7 @@ import okhttp3.Response;
 
 public class information extends AppCompatActivity {
     private TextView InfoText;
+    private TextView LinfoText;
     private TextView apiText;
     private TextView header;
     private TextView Hacker;
@@ -45,7 +46,8 @@ public class information extends AppCompatActivity {
         Intent intent = getIntent();
         //Setting of Variables
         setContentView(R.layout.activity_information);
-        InfoText = findViewById(R.id.InfoText);
+        InfoText = findViewById(R.id.api);
+        LinfoText = findViewById(R.id.local);
         apiText = findViewById(R.id.AlertText);
         header = findViewById(R.id.HeaderText);
         Hacker = findViewById(R.id.hacker);
@@ -102,7 +104,7 @@ public class information extends AppCompatActivity {
                     Log.e("6-1 :", "Change in IPs noticed");
                     if(netAddress.startsWith("192.168")){//If the IPs that do not match start with the regex, the private IP. A hacker may be on the network.
                         Log.e("6-1-1 :", "Hacker Detected");
-                        header.setText("Hacker Detected");
+                        header.setText("DNS Spoofing Detected");
                         header.setTextColor(Color.parseColor("#EC4C33"));//Set the Color of Header to Warning Red
                         try {
                             networkState.setImageResource(R.drawable.alert);//Change the image to alert
@@ -111,7 +113,7 @@ public class information extends AppCompatActivity {
                             Log.e("6-1-2 :", "Got hacker info");
                             if(data!= null){//If the hacker data is not empty display their data to the user
                                 Log.e("6-1-2-1 :", "Displaying hacker info");
-                                apiText.append("\n Hacker System Name "+data);
+                                apiText.append("\n Hacker System Name: "+data);
                                 apiText.append("\n Hacker IP: "+netAddress);
                             }
                         } catch (ExecutionException e) {
@@ -122,15 +124,15 @@ public class information extends AppCompatActivity {
                     }
                     else {//WE use this because some websites like google and facebook have multiple IPs which may not match but they also do not match the regex so these IPs are safe
                         Log.e("6-2-1 :", "No Hacker Detected");
-                        header.setText("No Hacker Detected");
-                        apiText.setText("It is however useful to connect to a VPN in order to hide your Internet activity");
+                        header.setText("No DNS Spoofing Detected");
+                        apiText.setText("It is however useful to connect to a VPN in order to hide your Internet activity \n https://www.vpnmentor.com/");
                     }
 
                 }
                 else{//Comparison showed IPs are same
                     Log.e("6-2 :", "No Hacker Detected");
-                    header.setText("No Hacker Detected");
-                    apiText.setText("It is however useful to connect to a VPN in order to hide your Internet activity");
+                    header.setText("No DNS Spoofing Detected");
+                    apiText.setText("It is however useful to connect to a VPN in order to hide your Internet activity \n https://www.vpnmentor.com/");
                 }
             }else{//If the local IP is empty then the website is invalid.
                 Log.e("6 :", "Local Ip is empty");
@@ -162,26 +164,34 @@ public class information extends AppCompatActivity {
                 Log.e("9 :", "Thumbprints are not null");
                 if(LANThumbprint.equalsIgnoreCase(NetThumbprint)){//Compare the thumbprints to see if they match
                     Log.e("9-1 :", "Thumbprints matches");
-                    InfoText.setText(String.format("No Hackers on Network :The Unique Thumbprints match\n Local Network Thumbprint %s\n API Thumbprint %s", LANThumbprint, NetThumbprint));
+                    Hacker.setText(String.format("No Spoofing Detected on Network :The Unique Thumbprints match"));
+                    LinfoText.setText(LANThumbprint);
+                    InfoText.setText(NetThumbprint);
                 }
                 else {
                     Log.e("9-1 :", "Thumbprints do not match");
                     if(netAddress.startsWith("192.168")){//If thumbprints do not match check if the local IP begins with the regex as some websites have different thumbprints.
                         Log.e("9-1-1 :", "Thumbprints do not match and Hacker IP");
-                        header.setText("Hacker Detected");
+                        header.setText("DNS Spoofing Detected");
                         header.setTextColor(Color.parseColor("#EC4C33"));
-                        InfoText.setText(String.format("Changes in Certificate Noticed: Hacker Detected\n Local Network Thumbprint %s\n API Thumbprint %s", LANThumbprint, NetThumbprint));
+                        Hacker.setText(String.format("Changes in Certificate Noticed: Spoofing Detected"));
+                        LinfoText.setText(LANThumbprint);
+                        InfoText.setText(NetThumbprint);
                     }
                     else {//Thumbprints do not match and the IP doesn't as well so no hacker present.
                         Log.e("9-1-2 :", "Thumbprints do not match but no Hacker");
-                        InfoText.setText(String.format("No Hackers on Network :The Thumbprints are however different\n Local Network Thumbprint %s\n API Thumbprint %s", LANThumbprint, NetThumbprint));
+                        Hacker.setText(String.format("No Spoofing Detected on Network"));
+                        LinfoText.setText(LANThumbprint);
+                        InfoText.setText(NetThumbprint);
                     }
                 }
 
             }
             else {//If app fails to retrieve thumbprint, which means it is unable to make a secure connection. Hacker may be on network.
                     Log.e("9-2 :", "Network may be compromised or may not have Secure connection enabled");
-                    InfoText.setText(String.format("Network Maybe Compromised\n Local Network Thumbprint %s\n API Thumbprint %s", LANThumbprint, NetThumbprint));
+                Hacker.setText(String.format("Network May be Compromised"));
+                LinfoText.setText(LANThumbprint);
+                InfoText.setText(NetThumbprint);
                 }
         }
         else{//Local IP doe not exist means invalid website was inputted
