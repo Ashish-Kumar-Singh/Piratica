@@ -6,4 +6,11 @@
     <string name="wifi_ssid">WiFi SSID</string>
     <string name="piratica">Piratica</string>
     <string name="check_for_hackers">Check for Hackers</string>
+    <string name="local_thumbprint">Local Thumbprint :</string>
+    <string name="api_thumbprint">API Thumbprint :</string>
+    <string name="save_scan">Save Scan</string>
+    <string name="network_status">network Status</string>
+    <string name="title_activity_main2">Main2Activity</string>
+    <string name="tab_text_1">Tab 1</string>
+    <string name="tab_text_2">Tab 2</string>
 </resources>
