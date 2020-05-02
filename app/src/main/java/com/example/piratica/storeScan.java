@@ -73,6 +73,10 @@ public class storeScan {
         return "Id :"+id+" Network Name: "+network+" Website Name: "+website+" Scan Result: "+result;
     }
     public String getHackerInfo(){
-        return "Id :"+id+"System Name: "+HackerName+" Hacker IP: "+HackerIp;
+        return "System Name: "+HackerName+" Hacker IP: "+HackerIp;
+    }
+    @Override
+    public String toString(){
+       return this.getStatus(); //Just an example ;)
     }
 }

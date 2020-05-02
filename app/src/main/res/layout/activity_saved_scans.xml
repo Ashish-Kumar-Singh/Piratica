@@ -9,15 +9,17 @@
 
     <TextView
         android:id="@+id/information"
-        android:layout_width="376dp"
-        android:layout_height="557dp"
+        android:layout_width="254dp"
+        android:layout_height="39dp"
+        android:text="Previous Scans"
+        android:textAlignment="center"
+        android:textColor="#FFFFFF"
+        android:textSize="25dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.485"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        android:textColor="#FFFFFF"
-        app:layout_constraintVertical_bias="0.188" />
+        app:layout_constraintVertical_bias="0.023" />
 
     <Button
         android:id="@+id/deleteButton"
@@ -45,4 +47,15 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.877" />
+
+    <ListView
+        android:id="@+id/list"
+        android:layout_width="360dp"
+        android:layout_height="502dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.492"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.361" />
 </android.support.constraint.ConstraintLayout>

@@ -1,12 +1,15 @@
 package com.example.piratica;
 
+import android.R.layout;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -21,6 +24,7 @@ public class savedScans extends AppCompatActivity {
 private TextView info;
 private EditText delete;
 private Button deleteAll;
+private ListView lists;
 ArrayList<storeScan> scans;
 
     @Override
@@ -30,19 +34,17 @@ ArrayList<storeScan> scans;
         deleteAll = findViewById(R.id.deleteButton);
         info = findViewById(R.id.information);
         delete = findViewById(R.id.deleteid);
+        lists = findViewById(R.id.list);
 
         final ArrayList<storeScan> list = readArray();
         Log.e("Read: ", "Read scans");
         if(list!=null){
-            for(storeScan item: list){
-                info.append(item.getStatus()+"\n");
-                if(item.getHackerIp()!=null && item.getHackerName()!=null){
-                    info.append(item.getStatus()+"\n");
-                }
-            }
+            storeScan[] storeScans = new storeScan[list.size()];
+            storeScans = list.toArray(storeScans);
+            lists.setAdapter(new ArrayAdapter<storeScan>(savedScans.this, layout.simple_list_item_1, storeScans));
         }
         else {
-            info.append("No saved scans");
+            info.setText("No saved scans");
         }
 
         deleteAll.setOnClickListener(new View.OnClickListener() {

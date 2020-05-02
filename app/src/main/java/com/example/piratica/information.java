@@ -194,6 +194,7 @@ public class information extends AppCompatActivity {
                 Log.e("9 :", "Thumbprints are not null");
                 if(LANThumbprint.equalsIgnoreCase(NetThumbprint)){//Compare the thumbprints to see if they match
                     Log.e("9-1 :", "Thumbprints matches");
+                    scan.setResult("No Spoofing Detected");
                     Hacker.setText(String.format("No Spoofing Detected on Network :The Unique Thumbprints match"));
                     LinfoText.setText(LANThumbprint);
                     InfoText.setText(NetThumbprint);
@@ -203,6 +204,7 @@ public class information extends AppCompatActivity {
                     if(netAddress.startsWith("192.168")){//If thumbprints do not match check if the local IP begins with the regex as some websites have different thumbprints.
                         Log.e("9-1-1 :", "Thumbprints do not match and Hacker IP");
                         header.setText("DNS Spoofing Detected");
+                        scan.setResult("DNS Spoofing Detected");
                         header.setTextColor(Color.parseColor("#EC4C33"));
                         Hacker.setText(String.format("Changes in Certificate Noticed: Spoofing Detected"));
                         LinfoText.setText(LANThumbprint);
@@ -219,7 +221,10 @@ public class information extends AppCompatActivity {
             }
             else {//If app fails to retrieve thumbprint, which means it is unable to make a secure connection. Hacker may be on network.
                 Log.e("9-2 :", "Network may be compromised or may not have Secure connection enabled");
-                Hacker.setText(String.format("Network May be Compromised"));
+                scan.setResult("DNS Spoofing Detected");
+                header.setText("DNS Spoofing Detected");
+                header.setTextColor(Color.parseColor("#EC4C33"));
+                Hacker.setText(String.format("Unable to establish Secure Connection"));
                 LinfoText.setText(LANThumbprint);
                 InfoText.setText(NetThumbprint);
             }
@@ -233,12 +238,6 @@ public class information extends AppCompatActivity {
             public void onClick(View v) {
                 try{
                     LocalList.add(scan);
-//                    SharedPreferences sharedPreferences = getSharedPreferences("share preferences", MODE_PRIVATE);
-//                    SharedPreferences.Editor editor = sharedPreferences.edit();
-//                    Gson gson = new Gson();
-//                    String json = gson.toJson(LocalList);
-//                    editor.putString("scans", json);
-//                    editor.apply();
                     write(LocalList);
                     Log.e("Piratica", "FIle has been written");
                 } catch (Exception e) {
