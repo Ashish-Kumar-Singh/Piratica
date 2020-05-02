@@ -29,9 +29,9 @@
         android:id="@+id/LocalThumbprint"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Local Thumbprint :"
+        android:text="@string/local_thumbprint"
         android:textColor="#FFFFFF"
-        android:textSize="17dp"
+        android:textSize="17sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.138"
@@ -44,7 +44,7 @@
         android:layout_width="179dp"
         android:layout_height="61dp"
         android:textColor="#FFFFFF"
-        android:textSize="15dp"
+        android:textSize="15sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.844"
@@ -57,7 +57,7 @@
         android:layout_width="179dp"
         android:layout_height="59dp"
         android:textColor="#FFFFFF"
-        android:textSize="15dp"
+        android:textSize="15sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.844"
@@ -69,9 +69,9 @@
         android:id="@+id/APIThumbprint"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="API Thumbprint :"
+        android:text="@string/api_thumbprint"
         android:textColor="#FFFFFF"
-        android:textSize="17dp"
+        android:textSize="17sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.183"
@@ -127,6 +127,18 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.09"
-        app:srcCompat="@drawable/secure" />
+        app:srcCompat="@drawable/secure"
+        android:contentDescription="@string/network_status" />
+
+    <Button
+        android:id="@+id/save"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/save_scan"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.992" />
 
 </android.support.constraint.ConstraintLayout>

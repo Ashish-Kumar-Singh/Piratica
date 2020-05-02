@@ -32,6 +32,7 @@ import jcifs.netbios.NbtAddress;
 public class MainActivity extends AppCompatActivity {
     private Button rollButton;
     private TextView ipaddress;
+    private Button scanButton;
     private  TextView ipstuff;
     private TextView ssid;
     private EditText website;
@@ -42,16 +43,19 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         rollButton = findViewById(R.id.rollButton);
+        scanButton = findViewById(R.id.scanButton);
         ipaddress = findViewById(R.id.ip);
         ssid = findViewById(R.id.ssid);
         website = (EditText) findViewById(R.id.userInput);
-        if (ActivityCompat.checkSelfPermission(MainActivity.this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(MainActivity.this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+        if (ActivityCompat.checkSelfPermission(MainActivity.this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(MainActivity.this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED
+                && ActivityCompat.checkSelfPermission(MainActivity.this, Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED){
             ActivityCompat.requestPermissions(MainActivity.this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, 1);
+            ActivityCompat.requestPermissions(MainActivity.this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, 1);
             return;
         }else{
 
             WifiManager wifiManager =(WifiManager) getApplicationContext().getSystemService(Context.WIFI_SERVICE);
-            WifiInfo wifiInfo = wifiManager.getConnectionInfo();
+            final WifiInfo wifiInfo = wifiManager.getConnectionInfo();
 
             if (wifiInfo == null) {
 
@@ -66,16 +70,6 @@ public class MainActivity extends AppCompatActivity {
                         (ipAddress >> 16 & 0xff),
                         (ipAddress >> 24 & 0xff));
                 ipaddress.setText("IP: " +FormatedIpAddress2);
-//                try {
-//                   check = new getAllIp().execute("192.168.86").get();
-//                    for (Map.Entry<String, String> entry : check.entrySet()) {
-//                        Log.e("key",entry.getKey() + " = " + entry.getValue());
-//                    }
-//                } catch (InterruptedException e) {
-//                    e.printStackTrace();
-//                } catch (ExecutionException e) {
-//                    e.printStackTrace();
-//                }
                 rollButton.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
@@ -88,8 +82,16 @@ public class MainActivity extends AppCompatActivity {
                             Log.e("input", user);
                             Intent intent = new Intent(getApplicationContext(), information.class);
                             intent.putExtra("user_input",user);
+                            intent.putExtra("ssid", wifiInfo.getSSID());
                             startActivity(intent);
                         }
+                    }
+                });
+                scanButton.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Intent intent = new Intent(getApplicationContext(), savedScans.class);
+                        startActivity(intent);
                     }
                 });
             }
