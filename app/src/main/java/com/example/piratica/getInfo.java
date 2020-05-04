@@ -24,6 +24,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.ExecutionException;
 
+import javax.net.ssl.HttpsURLConnection;
+
 public class getInfo extends AsyncTask<String, Integer, ArrayList<String>> {
 //    private String APIKey= "at_nZNsncxr1W3JtbG0qAiYFF1RVtv6I";
     private String APIKey= "at_WazJoJ9CHAE3lLWho1qpD2RNOt5ta";
@@ -36,7 +38,7 @@ public class getInfo extends AsyncTask<String, Integer, ArrayList<String>> {
         {
             try {
                 url = new URL("https://www.whoisxmlapi.com/whoisserver/DNSService?apiKey="+APIKey+"&domainName="+link+"&type=1&outputFormat=JSON");
-                HttpURLConnection httpConn = (HttpURLConnection)url.openConnection();
+                HttpsURLConnection httpConn = (HttpsURLConnection)url.openConnection();
                 httpConn.setConnectTimeout(300);
                 httpConn.setRequestMethod("GET");
                 int responseCode = httpConn.getResponseCode();

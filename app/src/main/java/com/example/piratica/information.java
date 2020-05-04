@@ -112,6 +112,7 @@ public class information extends AppCompatActivity {
                     //If the IPs are same the boolean is set to true
                     isChanged=true;
                     Log.e("IP", item);
+                    break;
                 }else{
                     isChanged=false;
                     //If we notice any changes in IP we set the boolean to false

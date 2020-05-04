@@ -39,9 +39,9 @@ ArrayList<storeScan> scans;
         final ArrayList<storeScan> list = readArray();
         Log.e("Read: ", "Read scans");
         if(list!=null){
-            storeScan[] storeScans = new storeScan[list.size()];
+            storeScan[] storeScans = new storeScan[list.size()];//store arraylist as an array
             storeScans = list.toArray(storeScans);
-            lists.setAdapter(new ArrayAdapter<storeScan>(savedScans.this, layout.simple_list_item_1, storeScans));
+            lists.setAdapter(new ArrayAdapter<storeScan>(savedScans.this, layout.simple_list_item_1, storeScans));//display the data in listview
         }
         else {
             info.setText("No saved scans");
@@ -59,7 +59,7 @@ ArrayList<storeScan> scans;
                             Log.e("Size: ", String.valueOf(list.size()));
                             storeScan scanner = iter.next();
                             String uid = String.valueOf(scanner.getId());
-                            if(id.equals(uid)){
+                            if(id.equals(uid)){//If id input matches an id from list delete it
                                 Log.e("Delete: ", String.valueOf(scanner.getId()));
                                 iter.remove();
                                 Log.e("Size: ", String.valueOf(list.size()));
@@ -79,24 +79,32 @@ ArrayList<storeScan> scans;
         });
 
     }
-    public ArrayList<storeScan> readArray(){
+    public ArrayList<storeScan> readArray(){//Read saved scans from shared preferences
         ArrayList<storeScan> list = null;
-        SharedPreferences sharedPreferences = getSharedPreferences("share preferences", MODE_PRIVATE);
-        Gson gson = new Gson();
-        String json = sharedPreferences.getString("scans",null);
-        Type type = new TypeToken<ArrayList<storeScan>>(){}.getType();
-        list = gson.fromJson(json, type);
+        try{
+            SharedPreferences sharedPreferences = getSharedPreferences("share preferences", MODE_PRIVATE);
+            Gson gson = new Gson();
+            String json = sharedPreferences.getString("scans",null);
+            Type type = new TypeToken<ArrayList<storeScan>>(){}.getType();
+            list = gson.fromJson(json, type);
+
+        }catch (Exception e){Log.e("Readarray: ", "Unable to read");}
         return list;
     }
 
-    public void saveArray(ArrayList<storeScan> list){
-        SharedPreferences sharedPreferences = getSharedPreferences("share preferences", MODE_PRIVATE);
-        SharedPreferences.Editor editor = sharedPreferences.edit();
-        Gson gson = new Gson();
-        String json = gson.toJson(list);
-        editor.putString("scans", json);
-        editor.apply();
-        Toast.makeText(getApplicationContext(),"Scan Deleted, Refresh page",Toast.LENGTH_SHORT).show();
+    public void saveArray(ArrayList<storeScan> list){//save scan in shared preferences after being updated
+        try{
+            SharedPreferences sharedPreferences = getSharedPreferences("share preferences", MODE_PRIVATE);
+            SharedPreferences.Editor editor = sharedPreferences.edit();
+            Gson gson = new Gson();
+            String json = gson.toJson(list);
+            editor.putString("scans", json);
+            editor.apply();
+            Toast.makeText(getApplicationContext(),"Scan Deleted, Refresh page",Toast.LENGTH_SHORT).show();
+        }catch (Exception e){
+            Toast.makeText(getApplicationContext(),"Unable to Delete",Toast.LENGTH_SHORT).show();
+        }
+
     }
 
 
