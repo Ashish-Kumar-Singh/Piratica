@@ -28,13 +28,13 @@ import javax.net.ssl.HttpsURLConnection;
 
 public class getInfo extends AsyncTask<String, Integer, ArrayList<String>> {
 //    private String APIKey= "at_nZNsncxr1W3JtbG0qAiYFF1RVtv6I";
-    private String APIKey= "at_WazJoJ9CHAE3lLWho1qpD2RNOt5ta";
+    private final String APIKey= "at_WazJoJ9CHAE3lLWho1qpD2RNOt5ta";
 
     @Override
     protected ArrayList<String> doInBackground(String... params) {
         URL url;
         String link = params[0];
-        ArrayList<String>IPList = new ArrayList<String>();;
+        ArrayList<String>IPList = new ArrayList<String>();
         {
             try {
                 url = new URL("https://www.whoisxmlapi.com/whoisserver/DNSService?apiKey="+APIKey+"&domainName="+link+"&type=1&outputFormat=JSON");

@@ -51,7 +51,7 @@ public class NetIpAdd extends AsyncTask<String, Integer, String> {
         } catch (CertificateEncodingException e) {
 //            e.printStackTrace();
             Log.e("Thumprint from Network", "Unable to Fetch");
-        };
+        }
         return LANThumbprint;
     }
 }

@@ -52,12 +52,12 @@ public class information extends AppCompatActivity {
     private TextView apiText;
     private TextView header;
     private TextView Hacker;
-    private String responseData;
+    // --Commented out by Inspection (05/05/2020 21:51):private String responseData;
     private ImageView networkState;
     private Button saveButton;
 
 
-    private String APIKey= "at_nZNsncxr1W3JtbG0qAiYFF1RVtv6I";
+    // --Commented out by Inspection (05/05/2020 21:51):private String APIKey= "at_nZNsncxr1W3JtbG0qAiYFF1RVtv6I";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -253,25 +253,28 @@ public class information extends AppCompatActivity {
     }
 
 public void write(ArrayList<storeScan> list){
-        SharedPreferences sharedPreferences = getSharedPreferences("share preferences", MODE_PRIVATE);
-        SharedPreferences.Editor editor = sharedPreferences.edit();
-        Gson gson = new Gson();
-        String oldjson = sharedPreferences.getString("scans",null);
-        Type type = new TypeToken<ArrayList<storeScan>>(){}.getType();
-        ArrayList<storeScan> alist = gson.fromJson(oldjson, type);
-        Random rand = new Random();
-        int size = rand.nextInt(1000);
-        list.get(0).setId(size);
-        if(alist == null){
-            alist = list;
-        }else{
-            alist.addAll(list);
-        }
-        String json = gson.toJson(alist);
-        editor.putString("scans", json);
-        editor.apply();
-    Toast.makeText(getApplicationContext(),"Scan Saved",Toast.LENGTH_SHORT).show();
+        try{
+            SharedPreferences sharedPreferences = getSharedPreferences("share preferences", MODE_PRIVATE);
+            SharedPreferences.Editor editor = sharedPreferences.edit();
+            Gson gson = new Gson();
+            String oldjson = sharedPreferences.getString("scans",null);
+            Type type = new TypeToken<ArrayList<storeScan>>(){}.getType();
+            ArrayList<storeScan> alist = gson.fromJson(oldjson, type);
+            Random rand = new Random();
+            int size = rand.nextInt(1000);
+            list.get(0).setId(size);
+            if(alist == null){
+                alist = list;
+            }else{
+                alist.addAll(list);
+            }
+            String json = gson.toJson(alist);
+            editor.putString("scans", json);
+            editor.apply();
+            Toast.makeText(getApplicationContext(),"Scan Saved",Toast.LENGTH_SHORT).show();
+        }catch(Exception e){
 
+        }
 }
 
 

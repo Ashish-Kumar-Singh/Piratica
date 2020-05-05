@@ -17,7 +17,7 @@ public class pingIP extends AsyncTask<String, Integer, String> {
         try {
             InetAddress addr = NbtAddress.getByName(params[0]).getInetAddress();
 //            byte[] mac = NbtAddress.getByName(params[0]).getMacAddress();
-//            if (mac != null) {
+//            if (mac != null) {D
 //                /*
 //                 * Extract each array of mac address and convert it
 //                 * to hexadecimal with the following format
