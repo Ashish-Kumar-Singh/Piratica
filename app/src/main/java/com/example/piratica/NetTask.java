@@ -6,7 +6,7 @@ import android.util.Log;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
 
-public class NetTask extends AsyncTask<String, Integer, String>
+class NetTask extends AsyncTask<String, Integer, String>
     //Gets IP address of the website on the current LAN Networks
 {
     @Override

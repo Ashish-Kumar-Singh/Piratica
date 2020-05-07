@@ -1,12 +1,8 @@
 package com.example.piratica;
 
-        import android.annotation.SuppressLint;
-        import android.content.Context;
         import android.content.Intent;
         import android.content.SharedPreferences;
         import android.graphics.Color;
-        import android.support.v4.content.ContextCompat;
-        import android.support.v4.widget.ViewDragHelper;
         import android.support.v7.app.AppCompatActivity;
         import android.os.Bundle;
         import android.util.Log;
@@ -15,68 +11,40 @@ package com.example.piratica;
         import android.widget.ImageView;
         import android.widget.TextView;
         import android.widget.Toast;
-        import android.widget.ViewAnimator;
 
         import com.google.gson.Gson;
         import com.google.gson.reflect.TypeToken;
 
-        import org.json.JSONArray;
-        import org.json.JSONException;
-        import org.json.JSONObject;
-
-        import java.io.File;
-        import java.io.FileNotFoundException;
-        import java.io.FileOutputStream;
-        import java.io.IOException;
-        import java.io.ObjectOutput;
-        import java.io.ObjectOutputStream;
-        import java.io.OutputStreamWriter;
         import java.lang.reflect.Type;
-        import java.net.InetAddress;
-        import java.net.UnknownHostException;
         import java.util.ArrayList;
-        import java.util.Map;
         import java.util.Random;
         import java.util.concurrent.ExecutionException;
 
-        import jcifs.netbios.NbtAddress;
-        import okhttp3.Call;
-        import okhttp3.Callback;
-        import okhttp3.OkHttpClient;
-        import okhttp3.Request;
-        import okhttp3.Response;
-
 public class information extends AppCompatActivity {
-    private TextView InfoText;
-    private TextView LinfoText;
-    private TextView apiText;
-    private TextView header;
-    private TextView Hacker;
-    // --Commented out by Inspection (05/05/2020 21:51):private String responseData;
-    private ImageView networkState;
-    private Button saveButton;
 
 
     // --Commented out by Inspection (05/05/2020 21:51):private String APIKey= "at_nZNsncxr1W3JtbG0qAiYFF1RVtv6I";
 
+    @SuppressWarnings("RedundantStringFormatCall")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         Intent intent = getIntent();
         //Setting of Variables
         setContentView(R.layout.activity_information);
-        InfoText = findViewById(R.id.api);
-        LinfoText = findViewById(R.id.local);
-        apiText = findViewById(R.id.AlertText);
-        header = findViewById(R.id.HeaderText);
-        Hacker = findViewById(R.id.hacker);
-        saveButton = findViewById(R.id.save);
-        networkState = (ImageView) findViewById(R.id.networkState);
+        TextView infoText = findViewById(R.id.api);
+        TextView linfoText = findViewById(R.id.local);
+        TextView apiText = findViewById(R.id.AlertText);
+        TextView header = findViewById(R.id.HeaderText);
+        TextView hacker = findViewById(R.id.hacker);
+        Button saveButton = findViewById(R.id.save);
+        // --Commented out by Inspection (05/05/2020 21:51):private String responseData;
+        ImageView networkState = findViewById(R.id.networkState);
         String LANThumbprint = null;
         String NetThumbprint = null;
         String netAddress = null;
         ArrayList<String>IPList = new ArrayList<>();
-        final ArrayList<storeScan>LocalList = new ArrayList<storeScan>();
+        final ArrayList<storeScan>LocalList = new ArrayList<>();
         final storeScan scan = new storeScan();
         Boolean isChanged = false;
         final String link = intent.getStringExtra("user_input");//Getting the input from user
@@ -88,18 +56,14 @@ public class information extends AppCompatActivity {
             Log.e("1 :", "Getting Local IP");
             netAddress = new NetTask().execute(link).get();//Getting the local IP of the website from the local network.
             Log.e("2 :", "Got Local IP");
-        } catch (ExecutionException e) {
-            e.printStackTrace();
-        } catch (InterruptedException e) {
+        } catch (ExecutionException | InterruptedException e) {
             e.printStackTrace();
         }
         try {
             Log.e("3 :", "Getting API IP");
             IPList = new getInfo().execute(link).get();//Getting the official List of IPs of the website from the API
             Log.e("4 :", "Got API IP");
-        } catch (ExecutionException e) {
-            Log.e("API IP :", "Unable to Fetch");
-        } catch (InterruptedException e) {
+        } catch (ExecutionException | InterruptedException e) {
             Log.e("API IP :", "Unable to Fetch");
         }
 
@@ -145,9 +109,7 @@ public class information extends AppCompatActivity {
                             apiText.append("\n Hacker IP: "+netAddress);
                             scan.setHackerIp(netAddress);
                         }
-                    } catch (ExecutionException e) {
-                        Log.e("6-1-2-2 :", "Displaying hacker info Error");
-                    } catch (InterruptedException e) {
+                    } catch (ExecutionException | InterruptedException e) {
                         Log.e("6-1-2-2 :", "Displaying hacker info Error");
                     }
                 }
@@ -177,9 +139,7 @@ public class information extends AppCompatActivity {
             Log.e("7 :", "Getting Local Thumbprint");
             LANThumbprint = new NetIpAdd().execute(link).get();//Retrieve the local thumbprint from the server
             Log.e("7 :", "Got Local Thumbprint");
-        } catch (InterruptedException e) {
-            Log.e("Local Thumbprint :", "Unable to Fetch");
-        } catch (ExecutionException e) {
+        } catch (InterruptedException | ExecutionException e) {
             Log.e("Local Thumbprint :", "Unable to Fetch");
         }
 
@@ -196,9 +156,9 @@ public class information extends AppCompatActivity {
                 if(LANThumbprint.equalsIgnoreCase(NetThumbprint)){//Compare the thumbprints to see if they match
                     Log.e("9-1 :", "Thumbprints matches");
                     scan.setResult("No Spoofing Detected");
-                    Hacker.setText(String.format("No Spoofing Detected on Network :The Unique Thumbprints match"));
-                    LinfoText.setText(LANThumbprint);
-                    InfoText.setText(NetThumbprint);
+                    hacker.setText(String.format("No Spoofing Detected on Network :The Unique Thumbprints match"));
+                    linfoText.setText(LANThumbprint);
+                    infoText.setText(NetThumbprint);
                 }
                 else {
                     Log.e("9-1 :", "Thumbprints do not match");
@@ -207,15 +167,15 @@ public class information extends AppCompatActivity {
                         header.setText("DNS Spoofing Detected");
                         scan.setResult("DNS Spoofing Detected");
                         header.setTextColor(Color.parseColor("#EC4C33"));
-                        Hacker.setText(String.format("Changes in Certificate Noticed: Spoofing Detected"));
-                        LinfoText.setText(LANThumbprint);
-                        InfoText.setText(NetThumbprint);
+                        hacker.setText(String.format("Changes in Certificate Noticed: Spoofing Detected"));
+                        linfoText.setText(LANThumbprint);
+                        infoText.setText(NetThumbprint);
                     }
                     else {//Thumbprints do not match and the IP doesn't as well so no hacker present.
                         Log.e("9-1-2 :", "Thumbprints do not match but no Hacker");
-                        Hacker.setText(String.format("No Spoofing Detected on Network"));
-                        LinfoText.setText(LANThumbprint);
-                        InfoText.setText(NetThumbprint);
+                        hacker.setText(String.format("No Spoofing Detected on Network"));
+                        linfoText.setText(LANThumbprint);
+                        infoText.setText(NetThumbprint);
                     }
                 }
 
@@ -225,9 +185,9 @@ public class information extends AppCompatActivity {
                 scan.setResult("DNS Spoofing Detected");
                 header.setText("DNS Spoofing Detected");
                 header.setTextColor(Color.parseColor("#EC4C33"));
-                Hacker.setText(String.format("Unable to establish Secure Connection"));
-                LinfoText.setText(LANThumbprint);
-                InfoText.setText(NetThumbprint);
+                hacker.setText(String.format("Unable to establish Secure Connection"));
+                linfoText.setText(LANThumbprint);
+                infoText.setText(NetThumbprint);
             }
         }
         else{//Local IP doe not exist means invalid website was inputted
@@ -252,7 +212,7 @@ public class information extends AppCompatActivity {
 
     }
 
-public void write(ArrayList<storeScan> list){
+private void write(ArrayList<storeScan> list){
         try{
             SharedPreferences sharedPreferences = getSharedPreferences("share preferences", MODE_PRIVATE);
             SharedPreferences.Editor editor = sharedPreferences.edit();
@@ -272,7 +232,7 @@ public void write(ArrayList<storeScan> list){
             editor.putString("scans", json);
             editor.apply();
             Toast.makeText(getApplicationContext(),"Scan Saved",Toast.LENGTH_SHORT).show();
-        }catch(Exception e){
+        }catch(Exception ignored){
 
         }
 }

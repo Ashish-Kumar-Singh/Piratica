@@ -1,12 +1,13 @@
 package com.example.piratica;
 
-public class storeScan {
-    public String website;
-    public String result;
-    public String HackerName;
-    public String HackerIp;
-    public String network;
-    public int id;
+@SuppressWarnings("NullableProblems")
+class storeScan {
+    private String website;
+    private String result;
+    private String HackerName;
+    private String HackerIp;
+    private String network;
+    private int id;
 
     public storeScan() {
 
@@ -69,7 +70,7 @@ public class storeScan {
         this.network = network;
     }
 
-    public String getStatus(){
+    private String getStatus(){
         return "Id :"+id+" Network Name: "+network+" Website Name: "+website+" Scan Result: "+result;
     }
     public String getHackerInfo(){

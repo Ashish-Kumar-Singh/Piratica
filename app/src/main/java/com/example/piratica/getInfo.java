@@ -1,9 +1,6 @@
 package com.example.piratica;
 
-import android.content.Intent;
-import android.graphics.Color;
 import android.os.AsyncTask;
-import android.support.annotation.NonNull;
 import android.util.Log;
 
 import org.json.JSONArray;
@@ -12,8 +9,6 @@ import org.json.JSONObject;
 
 import java.io.BufferedInputStream;
 import java.io.BufferedReader;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -21,23 +16,21 @@ import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
-import java.util.List;
-import java.util.concurrent.ExecutionException;
 
 import javax.net.ssl.HttpsURLConnection;
 
-public class getInfo extends AsyncTask<String, Integer, ArrayList<String>> {
-//    private String APIKey= "at_nZNsncxr1W3JtbG0qAiYFF1RVtv6I";
-    private final String APIKey= "at_WazJoJ9CHAE3lLWho1qpD2RNOt5ta";
+class getInfo extends AsyncTask<String, Integer, ArrayList<String>> {
 
     @Override
     protected ArrayList<String> doInBackground(String... params) {
         URL url;
         String link = params[0];
-        ArrayList<String>IPList = new ArrayList<String>();
+        ArrayList<String>IPList = new ArrayList<>();
         {
             try {
-                url = new URL("https://www.whoisxmlapi.com/whoisserver/DNSService?apiKey="+APIKey+"&domainName="+link+"&type=1&outputFormat=JSON");
+                //    private String APIKey= "at_nZNsncxr1W3JtbG0qAiYFF1RVtv6I";
+                String APIKey = "at_WazJoJ9CHAE3lLWho1qpD2RNOt5ta";
+                url = new URL("https://www.whoisxmlapi.com/whoisserver/DNSService?apiKey="+ APIKey +"&domainName="+link+"&type=1&outputFormat=JSON");
                 HttpsURLConnection httpConn = (HttpsURLConnection)url.openConnection();
                 httpConn.setConnectTimeout(300);
                 httpConn.setRequestMethod("GET");

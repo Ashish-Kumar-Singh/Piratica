@@ -21,27 +21,24 @@ import java.util.ArrayList;
 import java.util.Iterator;
 
 public class savedScans extends AppCompatActivity {
-private TextView info;
-private EditText delete;
-private Button deleteAll;
-private ListView lists;
-ArrayList<storeScan> scans;
+    private EditText delete;
+    ArrayList<storeScan> scans;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_saved_scans);
-        deleteAll = findViewById(R.id.deleteButton);
-        info = findViewById(R.id.information);
+        Button deleteAll = findViewById(R.id.deleteButton);
+        TextView info = findViewById(R.id.information);
         delete = findViewById(R.id.deleteid);
-        lists = findViewById(R.id.list);
+        ListView lists = findViewById(R.id.list);
 
         final ArrayList<storeScan> list = readArray();
         Log.e("Read: ", "Read scans");
         if(list!=null){
             storeScan[] storeScans = new storeScan[list.size()];//store arraylist as an array
             storeScans = list.toArray(storeScans);
-            lists.setAdapter(new ArrayAdapter<storeScan>(savedScans.this, layout.simple_list_item_1, storeScans));//display the data in listview
+            lists.setAdapter(new ArrayAdapter<>(savedScans.this, layout.simple_list_item_1, storeScans));//display the data in listview
         }
         else {
             info.setText("No saved scans");
@@ -79,7 +76,7 @@ ArrayList<storeScan> scans;
         });
 
     }
-    public ArrayList<storeScan> readArray(){//Read saved scans from shared preferences
+    private ArrayList<storeScan> readArray(){//Read saved scans from shared preferences
         ArrayList<storeScan> list = null;
         try{
             SharedPreferences sharedPreferences = getSharedPreferences("share preferences", MODE_PRIVATE);
@@ -92,7 +89,7 @@ ArrayList<storeScan> scans;
         return list;
     }
 
-    public void saveArray(ArrayList<storeScan> list){//save scan in shared preferences after being updated
+    private void saveArray(ArrayList<storeScan> list){//save scan in shared preferences after being updated
         try{
             SharedPreferences sharedPreferences = getSharedPreferences("share preferences", MODE_PRIVATE);
             SharedPreferences.Editor editor = sharedPreferences.edit();

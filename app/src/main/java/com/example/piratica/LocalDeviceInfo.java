@@ -1,6 +1,6 @@
 package com.example.piratica;
 //OKHTTP request from the API DO NOT NEED
-public class LocalDeviceInfo {
+class LocalDeviceInfo {
 //        OkHttpClient client = new OkHttpClient();
 //        String url = "https://www.whoisxmlapi.com/whoisserver/DNSService?apiKey="+APIKey+"&domainName="+link+"&type=1&outputFormat=JSON";
 //        try{

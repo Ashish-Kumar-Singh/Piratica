@@ -1,16 +1,16 @@
 <resources>
     <string name="app_name">piratica</string>
-    <string name="compromised_websites">Compromised Websites</string>
-    <string name="no_hackers_detected">No Hackers Detected</string>
     <string name="_192_168_10_1">192.168.10.1</string>
     <string name="wifi_ssid">WiFi SSID</string>
-    <string name="piratica">Piratica</string>
-    <string name="check_for_hackers">Check for Hackers</string>
     <string name="local_thumbprint">Local Thumbprint :</string>
     <string name="api_thumbprint">API Thumbprint :</string>
     <string name="save_scan">Save Scan</string>
     <string name="network_status">network Status</string>
-    <string name="title_activity_main2">Main2Activity</string>
-    <string name="tab_text_1">Tab 1</string>
-    <string name="tab_text_2">Tab 2</string>
+    <string name="view_previous_scans">View Previous Scans</string>
+    <string name="check_for_spoofing">Check for Spoofing</string>
+    <string name="example_com">example.com</string>
+    <string name="todo">TODO</string>
+    <string name="previous_scans">Previous Scans</string>
+    <string name="delete_scan">Delete Scan</string>
+    <string name="scan_id">scan id</string>
 </resources>

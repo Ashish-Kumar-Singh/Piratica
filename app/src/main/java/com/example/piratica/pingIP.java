@@ -3,14 +3,12 @@ package com.example.piratica;
 import android.os.AsyncTask;
 import android.util.Log;
 
-import java.io.IOException;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
-import java.nio.charset.StandardCharsets;
 
 import jcifs.netbios.NbtAddress;
 
-public class pingIP extends AsyncTask<String, Integer, String> {
+class pingIP extends AsyncTask<String, Integer, String> {
     @Override
     protected String doInBackground(String... params) {
         String hostname=null;
