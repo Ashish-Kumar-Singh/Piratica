@@ -6,3 +6,5 @@ The application looks for Spoofed websites on the network by validating server c
 
 
 The apk file can be found at [app/release/app-release.apk](https://github.com/Ashish-Kumar-Singh/Piratica/tree/master/app/release)
+
+To download the app click on this [link](https://github.com/Ashish-Kumar-Singh/Piratica/raw/master/app/release/app-release.apk)
