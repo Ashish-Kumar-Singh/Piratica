@@ -5,6 +5,7 @@ import android.os.AsyncTask;
 import android.util.Log;
 
 import java.io.IOException;
+import java.net.InetSocketAddress;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.security.cert.Certificate;
@@ -22,9 +23,12 @@ class NetIpAdd extends AsyncTask<String, Integer, String> {
     protected String doInBackground(String... params) {
         String LANThumbprint = null;
         try {
+            String host = params[0];
+            int port = 443;
+            int connectTimeout = 5000;
             SSLSocketFactory factory = HttpsURLConnection.getDefaultSSLSocketFactory();
-            SSLSocket socket = (SSLSocket) factory.createSocket(params[0], 443);
-            socket.setSoTimeout(300);
+            SSLSocket socket = (SSLSocket) factory.createSocket();
+            socket.connect(new InetSocketAddress(host, port), connectTimeout);
                 socket.startHandshake();
                 Certificate[] certs = socket.getSession().getPeerCertificates();
                 Certificate cert = certs[0];
@@ -38,6 +42,7 @@ class NetIpAdd extends AsyncTask<String, Integer, String> {
         }
         return LANThumbprint;
     }
+
 }
 
 

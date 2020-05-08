@@ -1,7 +1,9 @@
 package com.example.piratica;
 
+import android.app.Activity;
 import android.os.AsyncTask;
 import android.util.Log;
+import android.widget.Toast;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -20,6 +22,7 @@ import java.util.ArrayList;
 import javax.net.ssl.HttpsURLConnection;
 
 class getInfo extends AsyncTask<String, Integer, ArrayList<String>> {
+    private Activity activity; //activity is defined as a global variable in your AsyncTask
 
     @Override
     protected ArrayList<String> doInBackground(String... params) {
@@ -32,8 +35,8 @@ class getInfo extends AsyncTask<String, Integer, ArrayList<String>> {
                 String APIKey = "at_WazJoJ9CHAE3lLWho1qpD2RNOt5ta";
                 url = new URL("https://www.whoisxmlapi.com/whoisserver/DNSService?apiKey="+ APIKey +"&domainName="+link+"&type=1&outputFormat=JSON");
                 HttpsURLConnection httpConn = (HttpsURLConnection)url.openConnection();
-                httpConn.setConnectTimeout(300);
                 httpConn.setRequestMethod("GET");
+                httpConn.setConnectTimeout(3000);
                 int responseCode = httpConn.getResponseCode();
                 if(responseCode == HttpURLConnection.HTTP_OK){
                     InputStream in = new BufferedInputStream(httpConn.getInputStream());
@@ -75,4 +78,5 @@ class getInfo extends AsyncTask<String, Integer, ArrayList<String>> {
         }
         return  IPList;
     }
+
 }
