@@ -22,7 +22,6 @@ import java.util.ArrayList;
 import javax.net.ssl.HttpsURLConnection;
 
 class getInfo extends AsyncTask<String, Integer, ArrayList<String>> {
-    private Activity activity; //activity is defined as a global variable in your AsyncTask
 
     @Override
     protected ArrayList<String> doInBackground(String... params) {

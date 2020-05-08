@@ -49,7 +49,6 @@ public class information extends AppCompatActivity {
         Boolean isChanged = false;
         final String link = intent.getStringExtra("user_input");//Getting the input from user
         final String ssid = intent.getStringExtra("ssid");//Getting the ssid of connected network
-        Log.e("SSID: ", ssid);
         scan.setNetwork(ssid);
         scan.setWebsite(link);
         try {

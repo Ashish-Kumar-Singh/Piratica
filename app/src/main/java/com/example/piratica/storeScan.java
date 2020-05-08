@@ -1,5 +1,7 @@
 package com.example.piratica;
 
+import javax.servlet.http.HttpSessionActivationListener;
+
 @SuppressWarnings("NullableProblems")
 class storeScan {
     private String website;
@@ -71,10 +73,17 @@ class storeScan {
     }
 
     private String getStatus(){
-        return "Id :"+id+" Network Name: "+network+" Website Name: "+website+" Scan Result: "+result;
+        String data;
+        if(HackerName!=null){
+            data= "Id :"+id+" Network Name: "+network+" Website Name: "+website+" Scan Result: "+result+ "\n Attacker System Name: "+HackerName+" Attacker IP: "+HackerIp;
+        }
+        else{
+            data= "Id :"+id+" Network Name: "+network+" Website Name: "+website+" Scan Result: "+result;
+        }
+        return data;
     }
     public String getHackerInfo(){
-        return "System Name: "+HackerName+" Hacker IP: "+HackerIp;
+        return "Attacker System Name: "+HackerName+" Attacker IP: "+HackerIp;
     }
     @Override
     public String toString(){
