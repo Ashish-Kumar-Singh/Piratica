@@ -5,6 +5,6 @@ The application checks for possible DNS Spoofing attacks on user’s device and 
 The application looks for Spoofed websites on the network by validating server certificates and IP addresses and alerts user if it finds any.
 
 
-The apk file can be found at [app/release/app-release.apk](https://github.com/Ashish-Kumar-Singh/Piratica/tree/master/app/release)
+The apk file can be found at [app/release/piratica.apk](https://github.com/Ashish-Kumar-Singh/Piratica/tree/master/app/release)
 
-To download the app click on this [link](https://github.com/Ashish-Kumar-Singh/Piratica/raw/master/app/release/app-release.apk)
+To download the app click on this [link](https://github.com/Ashish-Kumar-Singh/Piratica/raw/master/app/release/piratica.apk)
